@@ -1,0 +1,96 @@
+/* ============================================================
+   AQUINO RACING — style.css
+   F1 Telemetry Portfolio · Clarence Aquino
+   ============================================================ */
+
+/* ---------- Custom Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #1C1F26;
+}
+::-webkit-scrollbar-thumb {
+    background: #FF334B;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #cc293c;
+}
+
+/* ---------- Glassmorphism ---------- */
+.glass-panel {
+    background: rgba(28, 31, 38, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-panel-hover:hover {
+    border-color: rgba(255, 51, 75, 0.22);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+    transform: translateY(-1px);
+    transition: all 0.25s ease;
+}
+
+.skill-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+/* ---------- Glow Utilities ---------- */
+.glow-red   { text-shadow: 0 0 4px rgba(255, 51, 75, 0.28); }
+.glow-blue  { text-shadow: 0 0 4px rgba(0, 210, 255, 0.28); }
+.glow-green { text-shadow: 0 0 4px rgba(5, 255, 155, 0.28); }
+
+.border-glow-red:hover {
+    box-shadow: 0 0 0 1px rgba(255, 51, 75, 0.2);
+}
+
+/* ---------- Speed Streaks ---------- */
+@keyframes speed-streak {
+    0%   { transform: translateX(-100%) skewX(-24deg); opacity: 0; }
+    50%  { opacity: 0.12; }
+    100% { transform: translateX(200%)  skewX(-24deg); opacity: 0; }
+}
+.speed-streak-line {
+    animation: speed-streak 8s infinite linear;
+}
+
+/* ---------- Slow Spin ---------- */
+@keyframes rotate-slow {
+    0%   { transform: rotate(0deg);   }
+    100% { transform: rotate(360deg); }
+}
+.spin-slow {
+    animation: rotate-slow 28s infinite linear;
+}
+
+/* ---------- Scanline Overlay ---------- */
+.scanlines { position: relative; }
+.scanlines::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background:
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%),
+        linear-gradient(90deg,
+            rgba(255, 0, 0, 0.015),
+            rgba(0, 255, 0, 0.008),
+            rgba(0, 255, 0, 0.015));
+    z-index: 10;
+    background-size: 100% 4px, 6px 100%;
+    pointer-events: none;
+    opacity: 0.45;
+}
