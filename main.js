@@ -242,27 +242,56 @@ document.addEventListener('DOMContentLoaded', () => {
        Contact Form
     ---------------------------------------------------------- */
     if (contactForm) {
-        contactForm.addEventListener('submit', e => {
-            e.preventDefault();
+            contactForm.addEventListener('submit', e => {
+                e.preventDefault();
 
-            contactSubmitBtn.disabled = true;
-            contactSubmitBtn.innerHTML = `
-                <span class="skew-x-[10deg] flex items-center gap-2">
-                    TRANSMITTING... <i class="fa-solid fa-spinner animate-spin"></i>
-                </span>`;
-
-            setTimeout(() => {
-                contactSuccessMsg.classList.remove('hidden');
-                contactForm.reset();
-                contactSubmitBtn.disabled = false;
+                // 1. Run UI loading animations immediately
+                contactSubmitBtn.disabled = true;
                 contactSubmitBtn.innerHTML = `
                     <span class="skew-x-[10deg] flex items-center gap-2">
-                        TRANSMIT PAYLOAD <i class="fa-solid fa-paper-plane"></i>
+                        SENDING... <i class="fa-solid fa-spinner animate-spin"></i>
                     </span>`;
 
-                setTimeout(() => contactSuccessMsg.classList.add('hidden'), 10000);
-            }, 1800);
-        });
-    }
+                // 2. Prepare the payload data packet for Web3Forms with your unique key
+                const formData = new FormData();
+                formData.append("access_key", "2c56ecbd-e5c2-49c8-a52c-f92a6d91dbe9");
+                formData.append("name", document.getElementById('contact-name').value);
+                formData.append("email", document.getElementById('contact-email').value);
+                formData.append("subject", document.getElementById('contact-subject').value);
+                formData.append("message", document.getElementById('contact-message').value);
+
+                // 3. Send the data silently via API background fetch
+                fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(async (response) => {
+                    let res = await response.json();
+                    if (response.status == 200) {
+                        // Success! Show message and reset form
+                        contactSuccessMsg.classList.remove('hidden');
+                        contactForm.reset();
+                    } else {
+                        console.log(res);
+                        alert("Transmission dropped: " + res.message);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert("Critical link error. Check connection.");
+                })
+                .finally(() => {
+                    // 4. Reset the button state back to standard look
+                    contactSubmitBtn.disabled = false;
+                    contactSubmitBtn.innerHTML = `
+                        <span class="skew-x-[10deg] flex items-center gap-2">
+                            SEND MESSAGE <i class="fa-solid fa-paper-plane"></i>
+                        </span>`;
+                    
+                    // Hide success banner after 10 seconds
+                    setTimeout(() => contactSuccessMsg.classList.add('hidden'), 10000);
+                });
+            });
+        }
 
 }); // end DOMContentLoaded
