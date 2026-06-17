@@ -1,6 +1,6 @@
 /* ============================================================
-   AQUINO RACING — main.js
-   F1 Telemetry Portfolio · Clarence Aquino
+   AQUINO — main.js
+   Portfolio · Clarence Aquino
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -222,73 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ----------------------------------------------------------
-       Live Telemetry Canvas
-    ---------------------------------------------------------- */
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let telemetryPoints = [];
-        const maxPoints = 50;
-
-        function resizeCanvas() {
-            const width = canvas.parentElement.clientWidth;
-            canvas.width  = width * window.devicePixelRatio;
-            canvas.height = 48  * window.devicePixelRatio;
-            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        for (let i = 0; i < maxPoints; i++) telemetryPoints.push(24);
-
-        function animateTelemetry() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const last   = telemetryPoints[telemetryPoints.length - 1];
-            const noise  = (Math.random() - 0.5) * 6;
-            let newVal   = Math.min(40, Math.max(8, last + noise));
-            telemetryPoints.shift();
-            telemetryPoints.push(newVal);
-
-            const displayW = canvas.width  / window.devicePixelRatio;
-            const displayH = canvas.height / window.devicePixelRatio;
-            const step     = displayW / (maxPoints - 1);
-
-            ctx.beginPath();
-            ctx.lineWidth   = 1.5;
-            ctx.strokeStyle = '#00D2FF';
-
-            telemetryPoints.forEach((val, i) => {
-                const x = i * step;
-                i === 0 ? ctx.moveTo(x, val) : ctx.lineTo(x, val);
-            });
-            ctx.stroke();
-
-            ctx.lineTo(displayW, displayH);
-            ctx.lineTo(0, displayH);
-            ctx.closePath();
-            const grad = ctx.createLinearGradient(0, 0, 0, displayH);
-            grad.addColorStop(0, 'rgba(0, 210, 255, 0.15)');
-            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = grad;
-            ctx.fill();
-
-            requestAnimationFrame(animateTelemetry);
-        }
-        animateTelemetry();
-    }
-
-    /* ----------------------------------------------------------
-       CPU Gauge — live fluctuation
-    ---------------------------------------------------------- */
-    if (cpuValSpan && cpuRing) {
-        setInterval(() => {
-            const val = (60 + Math.random() * 32).toFixed(1);
-            cpuValSpan.textContent = val;
-            cpuRing.style.strokeDashoffset = 125.6 - (125.6 * (val / 100));
-        }, 1200);
-    }
-
+  
     /* ----------------------------------------------------------
        System Clock (GMT+8)
     ---------------------------------------------------------- */
@@ -302,41 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         tick();
         setInterval(tick, 1000);
-    }
-
-    /* ----------------------------------------------------------
-       Uptime Counter
-    ---------------------------------------------------------- */
-    if (uptimeSpan) {
-        let days = 4, hours = 12, minutes = 44, seconds = 19;
-        setInterval(() => {
-            seconds++;
-            if (seconds >= 60) { seconds = 0; minutes++; }
-            if (minutes >= 60) { minutes = 0; hours++;   }
-            if (hours   >= 24) { hours   = 0; days++;    }
-            const pad = n => String(n).padStart(2, '0');
-            uptimeSpan.textContent = `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-        }, 1000);
-    }
-
-    /* ----------------------------------------------------------
-       Contribution Grid — randomised heat map
-    ---------------------------------------------------------- */
-    if (contribGrid) {
-        let html = '';
-        for (let col = 0; col < 40; col++) {
-            const xPos = col * 12;
-            for (let row = 0; row < 7; row++) {
-                const yPos = row * 10;
-                const rand = Math.random();
-                let fill = 'rgba(255,255,255,0.05)';
-                if      (rand > 0.85) fill = '#FF334B';
-                else if (rand > 0.60) fill = 'rgba(255,51,75,0.6)';
-                else if (rand > 0.40) fill = 'rgba(255,51,75,0.3)';
-                html += `<rect x="${xPos}" y="${yPos}" width="9" height="8" rx="1.5" fill="${fill}" />`;
-            }
-        }
-        contribGrid.innerHTML = html;
     }
 
     /* ----------------------------------------------------------
