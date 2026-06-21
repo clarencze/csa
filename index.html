@@ -1,814 +1,703 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clarence Aquino | Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clarence Aquino — Portfolio</title>
+  
+  <!-- Inter & Space Grotesk Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace'],
+          },
+          colors: {
+            // Light Mode
+            architecturalCream: '#EDEDE7',
+            deepObsidian: '#151718',
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+            satinSlate: '#707578',
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+            slateMuted: '#4F5A63',
+            slateStrong: '#2F363C',
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            luxuryEmerald: '#0A3C26',
 
-    <!-- Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        tech: ['Space Grotesk', 'sans-serif'],
-                        mono: ['Share Tech Mono', 'monospace'],
-                    },
-                    colors: {
-                        darkBg:        '#1C1F26',
-                        darkCard:      'rgba(28, 31, 38, 0.7)',
-                        f1Red:         '#FF334B',
-                        telemetryBlue: '#00D2FF',
-                        telemetryGreen:'#05FF9B',
-                        subtleGray:    '#8E9AA8',
-                    },
-                    backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)",
-                    }
-                }
-            }
+            // Dark Mode
+            brushedNickel: '#8E9396',
+            mintEmerald: '#00A86B',
         }
-    </script>
+        }
+      }
+    }
+  </script>
 
-    <!-- External Stylesheet -->
-    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-darkBg text-white font-sans overflow-x-hidden relative selection:bg-f1Red selection:text-white">
-
-    <!-- ═══════════════════════════════════════
-         BACKGROUND ORBS
-    ═══════════════════════════════════════ -->
-    <div class="absolute top-[10%] left-[-10%] w-[500px] h-[500px] bg-f1Red/10 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="absolute top-[40%] right-[-10%] w-[600px] h-[600px] bg-telemetryBlue/5 rounded-full blur-[150px] pointer-events-none"></div>
-    <div class="absolute bottom-[10%] left-[15%] w-[450px] h-[450px] bg-telemetryGreen/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-    <!-- ═══════════════════════════════════════
-         HEADER / NAV
-    ═══════════════════════════════════════ -->
-    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-panel border-b border-white/5">
-        <div class="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-f1Red via-telemetryBlue to-telemetryGreen transition-all duration-100" id="scroll-track-progress" style="width:0%"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
-
-            <!-- Logo -->
-            <a href="#hero" class="flex items-center gap-3 group">
-                <div class="relative flex items-center justify-center w-11 h-11 bg-f1Red rounded-br-2xl transform skew-x-[-12deg] transition-transform duration-300 group-hover:scale-105 border-t border-r border-white/40">
-                    <span class="font-tech font-extrabold text-white text-xl skew-x-[12deg]">CA</span>
-                </div>
-                <div>
-                    <span class="font-tech tracking-wider text-base font-bold text-white block">CLARENCE AQUINO</span>
-                    <span id="pit-wall-status" class="font-mono text-[9px] text-f1Red uppercase tracking-widest block -mt-1">
-                        <i class="fa-solid fa-circle-dot animate-pulse"></i> Portfolio
-                    </span>
-                </div>
-            </a>
-
-            <!-- Desktop nav -->
-            <nav id="desktop-nav" class="hidden md:flex items-center gap-1">
-                <a href="#about"      data-section="about"      class="nav-item px-4 py-2 text-sm font-tech font-medium uppercase tracking-wider text-subtleGray hover:text-f1Red transition-colors duration-200">About</a>
-                <a href="#skills"     data-section="skills"     class="nav-item px-4 py-2 text-sm font-tech font-medium uppercase tracking-wider text-subtleGray hover:text-f1Red transition-colors duration-200">Skills</a>
-                <a href="#projects"   data-section="projects"   class="nav-item px-4 py-2 text-sm font-tech font-medium uppercase tracking-wider text-subtleGray hover:text-f1Red transition-colors duration-200">Projects</a>
-                <a href="#experience" data-section="experience" class="nav-item px-4 py-2 text-sm font-tech font-medium uppercase tracking-wider text-subtleGray hover:text-f1Red transition-colors duration-200">Experience</a>
-                <a href="#contact"    data-section="contact"    class="nav-item px-4 py-2 text-sm font-tech font-medium uppercase tracking-wider text-subtleGray hover:text-f1Red transition-colors duration-200">Contact</a>
-            </nav>
-
-            <!-- Status + mobile toggle -->
-            <div class="flex items-center gap-4">
-                <div class="hidden sm:flex flex-col items-end text-right font-mono text-xs text-white/40">
-                    <span id="nav-active-sector" class="text-[10px] uppercase tracking-widest">Available for work</span>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden text-white hover:text-f1Red focus:outline-none text-2xl" aria-label="Toggle menu">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden border-t border-white/5 bg-darkBg/95 backdrop-blur-md">
-            <div class="px-4 pt-2 pb-6 space-y-3 font-tech text-base">
-                <a href="#about"      class="mobile-nav-link block py-3 px-4 rounded-lg hover:bg-white/5 text-subtleGray hover:text-f1Red transition-all">About</a>
-                <a href="#skills"     class="mobile-nav-link block py-3 px-4 rounded-lg hover:bg-white/5 text-subtleGray hover:text-f1Red transition-all">Skills</a>
-                <a href="#projects"   class="mobile-nav-link block py-3 px-4 rounded-lg hover:bg-white/5 text-subtleGray hover:text-f1Red transition-all">Projects</a>
-                <a href="#experience" class="mobile-nav-link block py-3 px-4 rounded-lg hover:bg-white/5 text-subtleGray hover:text-f1Red transition-all">Experience</a>
-                <a href="#contact"    class="mobile-nav-link block py-3 px-4 rounded-lg hover:bg-white/5 text-subtleGray hover:text-f1Red transition-all">Contact</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- ═══════════════════════════════════════
-         SECTION 01 — HERO
-    ═══════════════════════════════════════ -->
-    <section id="hero" class="min-h-screen pt-28 flex items-center justify-center relative overflow-hidden">
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full z-10 relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-            <!-- Left — copy block -->
-            <div class="lg:col-span-7 flex flex-col justify-center space-y-6">
-
-                <div class="space-y-2">
-                    <p class="font-mono text-xs tracking-[0.3em] uppercase text-f1Red/80">Computer Engineering Student</p>
-                    <h1 class="font-tech text-6xl sm:text-7xl xl:text-8xl font-extrabold text-white tracking-tight">Clarence Aquino</h1>
-                    <p class="font-tech text-2xl sm:text-3xl text-telemetryBlue font-semibold tracking-wide">Computer Engineering Student</p>
-                </div>
-
-                <p class="text-subtleGray text-base sm:text-lg max-w-xl leading-relaxed">
-                    I build clean software, embedded firmware, and practical interfaces with a focus on clarity, performance, and reliability.
-                </p>
-
-                <div class="flex flex-wrap items-center gap-4 pt-4">
-                    <a href="#projects" class="group relative px-6 py-3.5 bg-f1Red hover:bg-f1Red/90 text-white font-tech font-bold text-sm tracking-wider uppercase rounded-xl transition-all duration-300 border border-white/20 flex items-center gap-2 overflow-hidden">
-                        <span class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-                        <span class="flex items-center gap-2">View Projects <i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
-                    <a href="#contact" class="group relative px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-tech font-bold text-sm tracking-wider uppercase rounded-xl transition-all duration-300 border border-white/10 flex items-center gap-2">
-                        <span class="flex items-center gap-2 text-subtleGray hover:text-white">
-                            Contact Me <i class="fa-solid fa-headset text-f1Red"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Right — telemetry panel -->
-            <div class="lg:col-span-5 relative flex justify-center items-center">
-                <div class="absolute w-80 h-80 bg-telemetryBlue/8 rounded-full blur-[110px]"></div>
-
-                <div class="w-full max-w-md glass-panel p-8 rounded-2xl relative overflow-hidden border border-white/10">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-telemetryBlue"></div>
-
-                    <div class="space-y-6">
-                        <div class="space-y-2">
-                            <p class="font-mono text-[10px] uppercase tracking-[0.35em] text-white/40">Profile summary</p>
-                            <h3 class="font-tech text-2xl font-bold text-white">Focused on practical systems</h3>
-                            <p class="text-sm text-subtleGray leading-relaxed">
-                                Building thoughtful software and embedded solutions with a clean visual style and a strong focus on usability.
-                            </p>
-                        </div>
-
-                        <div class="grid grid-cols-1 gap-3">
-                            <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between">
-                                <span class="text-white/70 text-sm font-medium">Software development</span>
-                                <i class="fa-solid fa-code text-f1Red"></i>
-                            </div>
-                            <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between">
-                                <span class="text-white/70 text-sm font-medium">Embedded systems</span>
-                                <i class="fa-solid fa-microchip text-telemetryBlue"></i>
-                            </div>
-                            <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between">
-                                <span class="text-white/70 text-sm font-medium">Web interfaces</span>
-                                <i class="fa-solid fa-display text-telemetryGreen"></i>
-                            </div>
-                        </div>
-
-                        <div class="pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-white/40 uppercase tracking-widest">
-                            <span>Portfolio ready</span>
-                            <span>Open for work</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════
-         SECTION 02 — ABOUT
-    ═══════════════════════════════════════ -->
-    <section id="about" class="py-24 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                <div class="space-y-2">
-                    <div class="flex items-center gap-2 font-mono text-f1Red text-sm font-semibold tracking-widest uppercase">
-                        <span class="w-2.5 h-1 bg-f1Red"></span>About
-                    </div>
-                    <h2 class="font-tech text-3xl sm:text-4xl font-extrabold tracking-tight uppercase">About</h2>
-                </div>
-                <div class="font-mono text-xs text-white/40 border-l-2 border-f1Red pl-4">
-                    Overview<br>
-                    Profile
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-                <!-- Driver card -->
-                <div class="lg:col-span-4 glass-panel rounded-2xl p-6 border-b-4 border-b-f1Red relative group">
-                    <div class="absolute -top-3 -right-3 bg-f1Red font-tech font-extrabold text-sm px-3 py-1 rounded-br-lg">Profile</div>
-
-                    <div class="aspect-square bg-white/5 rounded-xl border border-white/10 mb-6 relative overflow-hidden flex items-center justify-center">
-                        <img src="img/profile.png" alt="Clarence Aquino portrait" class="w-full h-full object-cover object-center">
-                    </div>
-
-                    <div class="space-y-3 font-mono text-xs border-t border-white/10 pt-4">
-                        <div class="flex justify-between"><span class="text-white/40">NAME:</span><span class="text-white font-semibold">Clarence Aquino</span></div>
-                        <div class="flex justify-between"><span class="text-white/40">SPECIALIZATION:</span><span class="text-telemetryBlue font-semibold">Computer Engineering</span></div>
-                        <div class="flex justify-between"><span class="text-white/40">TEAM ASSIGNMENT:</span><span class="text-f1Red font-semibold">Aspiring Software Engineer</span></div>
-                        <div class="flex justify-between"><span class="text-white/40">CURRENT FOCUS:</span><span class="text-telemetryGreen font-semibold">Active Development</span></div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-2 mt-6">
-                        <a href="https://github.com/clarencze" target="_blank" rel="noopener" class="bg-white/5 hover:bg-f1Red/20 py-2 rounded-lg border border-white/10 flex items-center justify-center text-sm transition-colors duration-200"><i class="fa-brands fa-github mr-1.5"></i> Git</a>
-                        <a href="https://www.linkedin.com/in/clarence-aquino-3b7141417/" target="_blank" rel="noopener" class="bg-white/5 hover:bg-telemetryBlue/20 py-2 rounded-lg border border-white/10 flex items-center justify-center text-sm transition-colors duration-200"><i class="fa-brands fa-linkedin-in mr-1.5"></i> In</a>
-                        <a href="mailto:aquinoclarence89@gmail.com " class="bg-white/5 hover:bg-telemetryGreen/20 py-2 rounded-lg border border-white/10 flex items-center justify-center text-sm transition-colors duration-200"><i class="fa-solid fa-envelope mr-1.5"></i> Mail</a>
-                    </div>
-                </div>
-
-                <!-- Bio + timeline -->
-                <div class="lg:col-span-8 space-y-8">
-
-                    <div class="glass-panel p-6 sm:p-8 rounded-2xl relative">
-                        <h3 class="font-tech font-bold text-lg text-telemetryBlue uppercase mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-gauge-high text-f1Red"></i> Profile
-                        </h3>
-                        <p class="text-subtleGray leading-relaxed text-base">
-                            I’m a Computer Engineering student interested in the connection between hardware and software in real-world systems. I focus on building projects involving embedded systems, real-time applications, and performance-oriented programming. I enjoy working with microcontrollers and software tools to design efficient and reliable systems, and I’m continuously improving my skills through hands-on projects and experimentation.
-                        </p>
-                    </div>
-
-                    <div class="glass-panel p-6 sm:p-8 rounded-2xl">
-                        <h3 class="font-tech font-bold text-lg text-telemetryBlue uppercase mb-6 flex items-center gap-2">
-                            <i class="fa-solid fa-graduation-cap text-f1Red"></i> Education
-                        </h3>
-                        <div class="relative pl-6 border-l border-white/10 space-y-8">
-                            <div class="relative">
-                                <span class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-f1Red border-4 border-darkBg"></span>
-                                <div class="flex flex-col sm:flex-row sm:justify-between items-start gap-1 mb-2">
-                                    <h4 class="font-tech font-bold text-white text-base">Bachelor of Science in Computer Engineering</h4>
-                                    <span class="font-mono text-xs text-f1Red bg-f1Red/10 border border-f1Red/20 px-2 py-0.5 rounded-full uppercase">2023 – Present</span>
-                                </div>
-                                <p class="text-xs text-telemetryBlue font-mono uppercase mb-2">Pampanga State University</p>
-                                <p class="text-sm text-subtleGray leading-relaxed">
-                                    Exploring embedded systems, computer networks, digital signal processing, and real-time computing through hands-on academic projects involving microcontrollers, IoT devices, and software-based simulations.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════
-         SECTION 03 — SKILLS / TELEMETRY
-    ═══════════════════════════════════════ -->
-    <section id="skills" class="py-24 relative bg-black/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                <div class="space-y-2">
-                    <div class="flex items-center gap-2 font-mono text-telemetryBlue text-sm font-semibold tracking-widest uppercase">
-                        <span class="w-2.5 h-1 bg-telemetryBlue"></span>Skills
-                    </div>
-                    <h2 class="font-tech text-3xl sm:text-4xl font-extrabold tracking-tight uppercase">Skills</h2>
-                </div>
-                <div class="font-mono text-xs text-white/40 border-l-2 border-telemetryBlue pl-4">
-                    Tools and systems<br>Used regularly
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-                <div class="glass-panel p-6 rounded-2xl space-y-6">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-f1Red rounded-full"></span>
-                            <h3 class="font-tech font-extrabold tracking-wider text-sm uppercase">Programming</h3>
-                        </div>
-                        <span class="font-mono text-xs text-white/40">Core languages</span>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-pill"><i class="fa-brands fa-html5 text-f1Red"></i> HTML</span>
-                        <span class="skill-pill"><i class="fa-solid fa-code text-f1Red"></i> C++</span>
-                        <span class="skill-pill"><i class="fa-brands fa-js text-amber-400"></i> JavaScript</span>
-                        <span class="skill-pill"><i class="fa-brands fa-python text-yellow-500"></i> Python</span>
-                        <span class="skill-pill"><i class="fa-brands fa-php text-telemetryBlue"></i> PHP</span>
-                    </div>
-                </div>
-
-                <div class="glass-panel p-6 rounded-2xl space-y-6">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-telemetryBlue rounded-full"></span>
-                            <h3 class="font-tech font-extrabold tracking-wider text-sm uppercase">Embedded</h3>
-                        </div>
-                        <span class="font-mono text-xs text-white/40">Hardware focus</span>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-pill"><i class="fa-solid fa-microchip text-telemetryBlue"></i> Microcontrollers</span>
-                        <span class="skill-pill"><i class="fa-solid fa-wave-square text-telemetryGreen"></i> DSP</span>
-                        <span class="skill-pill"><i class="fa-solid fa-signal text-f1Red"></i> IoT</span>
-                    </div>
-                </div>
-
-                <div class="glass-panel p-6 rounded-2xl space-y-6">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-telemetryGreen rounded-full"></span>
-                            <h3 class="font-tech font-extrabold tracking-wider text-sm uppercase">Databases</h3>
-                        </div>
-                        <span class="font-mono text-xs text-white/40">Data layer</span>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-pill"><i class="fa-solid fa-database text-telemetryGreen"></i> MySQL</span>
-                        <span class="skill-pill"><i class="fa-solid fa-cloud text-telemetryBlue"></i> Firebase</span>
-                        <span class="skill-pill"><i class="fa-solid fa-server text-f1Red"></i> Backend</span>
-                    </div>
-                </div>
-
-                <div class="glass-panel p-6 rounded-2xl space-y-6">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-white rounded-full"></span>
-                            <h3 class="font-tech font-extrabold tracking-wider text-sm uppercase">Tools</h3>
-                        </div>
-                        <span class="font-mono text-xs text-white/40">Workflow</span>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-pill"><i class="fa-brands fa-git-alt text-f1Red"></i> Git</span>
-                        <span class="skill-pill"><i class="fa-solid fa-laptop-code text-yellow-500"></i> VS Code</span>
-                        <span class="skill-pill"><i class="fa-brands fa-github text-white"></i> GitHub</span>
-                        <span class="skill-pill"><i class="fa-solid fa-terminal text-telemetryBlue"></i> CLI</span>
-                        <span class="skill-pill"><i class="fa-solid fa-microchip text-telemetryGreen"></i> Arduino IDE</span>
-                        <span class="skill-pill"><i class="fa-solid fa-server text-f1Red"></i> XAMPP</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════
-         SECTION 04 — PROJECTS
-    ═══════════════════════════════════════ -->
-    <section id="projects" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                <div class="space-y-2">
-                    <div class="flex items-center gap-2 font-mono text-f1Red text-sm font-semibold tracking-widest uppercase">
-                        <span class="w-2.5 h-1 bg-f1Red"></span>Projects
-                    </div>
-                    <h2 class="font-tech text-3xl sm:text-4xl font-extrabold tracking-tight uppercase">Projects</h2>
-                </div>
-                <div class="font-mono text-xs text-white/40 border-l-2 border-f1Red pl-4">
-                    Selected work<br>Showcase
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-            <!-- Card 1: OS Scheduler -->
-            <div class="glass-panel rounded-2xl border border-white/10 flex flex-col justify-between overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300">
-
-                <!-- Top Accent -->
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-f1Red to-transparent z-20"></div>
-
-                <!-- Background Image -->
-                <div class="absolute inset-0 z-0">
-                    <img src="img/osv.png" alt="OS Scheduler Preview" class="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/40 to-transparent"></div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6 space-y-4 relative z-10">
-
-                    <!-- Header -->
-                    <div class="flex items-center justify-between">
-                        <span class="px-2.5 py-1 text-[10px] font-mono bg-f1Red/20 border border-f1Red/40 text-white font-bold tracking-widest uppercase rounded shadow-sm">Project 01</span>
-                        <span class="font-mono text-xs text-white/60">DEC 2025</span>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="space-y-2">
-                        <h3 class="font-tech font-bold text-2xl text-white group-hover:text-f1Red drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-colors duration-200">OS Scheduler & Memory Visualizer</h3>
-                        <p class="text-white/90 text-sm leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">Developed an interactive Operating System simulator that demonstrates CPU scheduling and page replacement algorithms through real-time visualizations. Supports FCFS, SJF, Priority, Round Robin, FIFO, LRU, and Optimal algorithms, enabling users to analyze execution flow, waiting times, turnaround times, and memory management behavior.</p>
-                    </div>
-
-                    <!-- Technologies -->
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">HTML</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">CSS</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">JavaScript</span>
-                    </div>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="p-6 bg-darkBg/80 backdrop-blur-md border-t border-white/5 flex items-center justify-between gap-4 relative z-10">
-                    <a href="https://github.com/clarencze/OS-VISUALIZER" target="_blank" rel="noopener" class="text-sm font-tech font-bold text-subtleGray hover:text-white transition-colors flex items-center gap-1.5">
-                        <i class="fa-brands fa-github text-base"></i> TELEMETRY_CODE
-                    </a>
-                    <a href="https://osvisualizer.onrender.com/" target="_blank" rel="noopener" class="text-sm font-tech font-bold text-f1Red hover:underline flex items-center gap-1.5">
-                        LIVE_SIMULATE
-                        <i class="fa-solid fa-play text-xs"></i>
-                    </a>
-                </div>
-
-            </div>
-
-            <!-- Card 2: Numerical Methods -->
-            <div class="glass-panel rounded-2xl border border-white/10 flex flex-col justify-between overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300">
-
-                <!-- Top Accent -->
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-telemetryBlue to-transparent z-20"></div>
-
-                <!-- Background Image -->
-                <div class="absolute inset-0 z-0">
-                    <img src="img/num.png" alt="Numerical Methods Engine Preview" class="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/40 to-transparent"></div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6 space-y-4 relative z-10">
-
-                    <!-- Header -->
-                    <div class="flex items-center justify-between">
-                        <span class="px-2.5 py-1 text-[10px] font-mono bg-telemetryBlue/20 border border-telemetryBlue/40 text-white font-bold tracking-widest uppercase rounded shadow-sm">Project 02</span>
-                        <span class="font-mono text-xs text-white/60">MAY 2025</span>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="space-y-2">
-                        <h3 class="font-tech font-bold text-2xl text-white group-hover:text-telemetryBlue drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-colors duration-200">Numerical Methods Engine</h3>
-                        <p class="text-white/90 text-sm leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">A computational tool for solving and analyzing systems of linear equations and numerical methods. Implements Cramer’s Rule, Gaussian Elimination, Gauss-Jordan Elimination, and LU Decomposition, with step-by-step solutions and result validation for educational and problem-solving purposes.</p>
-                    </div>
-
-                    <!-- Technologies -->
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">HTML</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">CSS</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">JavaScript</span>
-                    </div>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="p-6 bg-darkBg/80 backdrop-blur-md border-t border-white/5 flex items-center justify-between gap-4 relative z-10">
-                    <a href="https://github.com/Jviscoding/Numerical-Method" target="_blank" rel="noopener" class="text-sm font-tech font-bold text-subtleGray hover:text-white transition-colors flex items-center gap-1.5">
-                        <i class="fa-brands fa-github text-base"></i> TELEMETRY_CODE
-                    </a>
-                    <a href="https://numerical-method.pages.dev/" target="_blank" rel="noopener" class="text-sm font-tech font-bold text-telemetryBlue hover:underline flex items-center gap-1.5">
-                        LIVE_SIMULATE
-                        <i class="fa-solid fa-play text-xs"></i>
-                    </a>
-                </div>
-
-            </div>
-
-            <!-- Card 3: DSP Simulator -->
-            <div class="glass-panel rounded-2xl border border-white/10 flex flex-col justify-between overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300">
-
-                <!-- Top Accent -->
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-telemetryGreen to-transparent z-20"></div>
-
-                <!-- Background Image -->
-                <div class="absolute inset-0 z-0">
-                    <img src="img/dsp.png" alt="DSP Simulator Preview" class="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/40 to-transparent"></div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6 space-y-4 relative z-10">
-
-                    <!-- Header -->
-                    <div class="flex items-center justify-between">
-                        <span class="px-2.5 py-1 text-[10px] font-mono bg-telemetryGreen/20 border border-telemetryGreen/40 text-white font-bold tracking-widest uppercase rounded shadow-sm">Project 03</span>
-                        <span class="font-mono text-xs text-white/60">MAY 2026</span>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="space-y-2">
-                        <h3 class="font-tech font-bold text-2xl text-white group-hover:text-telemetryGreen drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-colors duration-200">Digital Signal Processing Simulator</h3>
-                        <p class="text-white/90 text-sm leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">A real-time signal processing and visualization tool simulating analog and digital systems. Implements oscilloscope-style wave rendering with digital filter analysis (Butterworth, Chebyshev), Fourier Transform techniques (DFT/FFT), windowing functions, Z-transform concepts, and audio/image signal processing workflows for frequency-domain exploration.</p>
-                    </div>
-
-                    <!-- Technologies -->
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">Python</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">PyQt6</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">NumPy</span>
-                    </div>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="p-6 bg-darkBg/80 backdrop-blur-md border-t border-white/5 flex items-center justify-between gap-4 relative z-10">
-                    <a href="https://github.com" target="_blank" rel="noopener" class="text-sm font-tech font-bold text-subtleGray hover:text-white transition-colors flex items-center gap-1.5">
-                        <i class="fa-brands fa-github text-base"></i> TELEMETRY_CODE
-                    </a>
-                    <button type="button" class="text-sm font-tech font-bold text-telemetryGreen hover:underline flex items-center gap-1.5" data-showcase-open data-showcase-title="DSP Simulator" data-showcase-caption="Digital Signal Processing Simulator preview" data-showcase-images="img/dsp.png|img/dsp-2.png|img/dsp-3.png|img/dsp-4.png">
-                        VIEW_PROJECT
-                        <i class="fa-solid fa-image text-xs"></i>
-                    </button>
-                </div>
-
-            </div>
-
-            <!-- Card 4: ESP32-CAM Remote Health Monitor -->
-            <div class="glass-panel rounded-2xl border border-white/10 flex flex-col justify-between overflow-hidden relative group hover:scale-[1.01] transition-transform duration-300">
-
-                <!-- Top Accent -->
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-f1Red to-transparent z-20"></div>
-
-                <!-- Background Image -->
-                <div class="absolute inset-0 z-0">
-                    <img src="img/espcam.JPG" alt="ESP32-CAM Remote Health Monitor Preview" class="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/40 to-transparent"></div>
-                </div>
-
-                <!-- Content -->
-                <div class="p-6 space-y-4 relative z-10">
-
-                    <!-- Header -->
-                    <div class="flex items-center justify-between">
-                        <span class="px-2.5 py-1 text-[10px] font-mono bg-f1Red/20 border border-f1Red/40 text-white font-bold tracking-widest uppercase rounded shadow-sm">
-                            Project 04
-                        </span>
-                        <span class="font-mono text-xs text-white/60">MAY 2026</span>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="space-y-2">
-                        <h3 class="font-tech font-bold text-2xl text-white group-hover:text-f1Red drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-colors duration-200">
-                            ESP32-CAM Remote Health Monitor
-                        </h3>
-                        <p class="text-white/90 text-sm leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-                            An embedded IoT system capable of real-time video transmission and environmental monitoring, integrating thermal readings, power consumption metrics, and network transmission performance tracking. Implements computer vision-based person detection using YOLO, triggering system initialization and data streaming upon detection events.
-                        </p>
-                    </div>
-
-                    <!-- Technologies -->
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">C++ (Arduino)</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">Python</span>
-                        <span class="px-2.5 py-0.5 text-xs font-mono bg-darkBg/60 border border-white/20 text-white rounded-full backdrop-blur-sm">Yolo V8</span>
-                    </div>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="p-6 bg-darkBg/80 backdrop-blur-md border-t border-white/5 flex items-center justify-between gap-4 relative z-10">
-                    <a href="https://github.com" target="_blank" rel="noopener" class="text-sm font-tech font-bold text-subtleGray hover:text-white transition-colors flex items-center gap-1.5">
-                        <i class="fa-brands fa-github text-base"></i>
-                        TELEMETRY_CODE
-                    </a>
-
-                    <button type="button" class="text-sm font-tech font-bold text-f1Red hover:underline flex items-center gap-1.5" data-showcase-open data-showcase-title="ESP32-CAM Health Monitor" data-showcase-caption="ESP32-CAM system showcase preview" data-showcase-images="img/espcam.JPG|img/esp-2.png">
-                        SYSTEM_SHOWCASE
-                        <i class="fa-solid fa-image text-xs"></i>
-                    </button>
-                </div>
-            </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════
-         SECTION 06 — EXPERIENCE
-    ═══════════════════════════════════════ -->
-    <section id="experience" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                <div class="space-y-2">
-                    <div class="flex items-center gap-2 font-mono text-f1Red text-sm font-semibold tracking-widest uppercase">
-                        <span class="w-2.5 h-1 bg-f1Red"></span>Experience
-                    </div>
-                    <h2 class="font-tech text-3xl sm:text-4xl font-extrabold tracking-tight uppercase">Experience</h2>
-                </div>
-                <div class="font-mono text-xs text-white/40 border-l-2 border-f1Red pl-4">
-                    Timeline<br>Recent roles
-                </div>
-            </div>
-
-            <div class="relative pl-8 md:pl-0">
-                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-f1Red via-telemetryBlue to-transparent -translate-x-1/2 hidden md:block"></div>
-                <div class="absolute left-8 md:left-1/2 top-0 -translate-x-1/2 -translate-y-4 w-4 h-8 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:4px_4px] border border-white/20 rounded hidden md:block"></div>
-
-                <div class="space-y-16">
-
-                    <!-- Checkpoint 3 -->
-                    <div class="relative flex flex-col md:flex-row md:justify-start md:items-center">
-                        <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-f1Red border-4 border-darkBg -translate-x-1/2 flex items-center justify-center z-10">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-                        </div>
-                        <div class="md:w-[45%] md:text-right pr-0 md:pr-12 pl-12 md:pl-0">
-                            <div class="glass-panel p-6 rounded-2xl relative border-glow-red duration-300">
-                                <div class="font-mono text-xs text-f1Red font-bold uppercase mb-1">CHECKPOINT 03 // JUN 2026 – PRESENT</div>
-                                <h3 class="font-tech font-bold text-xl text-white">Intern</h3>
-                                <p class="font-mono text-xs text-telemetryBlue mb-3">Dakila Soft</p>
-                                <p class="text-sm text-subtleGray leading-relaxed inline-block md:text-right text-left">Developing IoT and web-based solutions by integrating hardware devices with software platforms, building responsive applications, managing databases, and implementing real-time data collection, monitoring, and visualization systems.
-</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Checkpoint 2 -->
-                    <div class="relative flex flex-col md:flex-row md:justify-end md:items-center">
-                        <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-telemetryBlue border-4 border-darkBg -translate-x-1/2 flex items-center justify-center z-10">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-                        </div>
-                        <div class="md:w-[45%] pl-12 md:pl-12">
-                            <div class="glass-panel p-6 rounded-2xl relative border-glow-red duration-300">
-                                <div class="font-mono text-xs text-telemetryBlue font-bold uppercase mb-1">CHECKPOINT 02 // AUG 2023 – PRESENT</div>
-                                <h3 class="font-tech font-bold text-xl text-white">Computer Engineering Student</h3>
-                                <p class="font-mono text-xs text-telemetryGreen mb-3">Pampanga State University</p>
-                                <p class="text-sm text-subtleGray leading-relaxed">Focused on software development, database management, and IoT systems. Built academic projects using Python, Java, PHP, MySQL, Firebase, and embedded systems such as ESP32-based devices for monitoring and automation applications.
-</p></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Checkpoint 1 -->
-                    <div class="relative flex flex-col md:flex-row md:justify-start md:items-center">
-                        <div class="absolute left-8 md:left-1/2 w-6 h-6 rounded-full bg-telemetryGreen border-4 border-darkBg -translate-x-1/2 flex items-center justify-center z-10">
-                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-                        </div>
-                        <div class="md:w-[45%] md:text-right pr-0 md:pr-12 pl-12 md:pl-0">
-                            <div class="glass-panel p-6 rounded-2xl relative border-glow-red duration-300">
-                                <div class="font-mono text-xs text-telemetryGreen font-bold uppercase mb-1">CHECKPOINT 01 // JAN 2023 – AUG 2023</div>
-                                <h3 class="font-tech font-bold text-xl text-white">Senior High School Student</h3>
-                                <p class="font-mono text-xs text-telemetryBlue mb-3">Porac Model Community High School</p>
-                                <p class="text-sm text-subtleGray leading-relaxed inline-block md:text-right text-left">Started learning programming languages such as python and java</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════
-         SECTION 07 — CONTACT
-    ═══════════════════════════════════════ -->
-    <section id="contact" class="py-24 relative overflow-hidden bg-black/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-                <div class="space-y-2">
-                    <div class="flex items-center gap-2 font-mono text-f1Red text-sm font-semibold tracking-widest uppercase">
-                        <span class="w-2.5 h-1 bg-f1Red"></span>Get in touch
-                    </div>
-                    <h2 class="font-tech text-3xl sm:text-4xl font-extrabold tracking-tight uppercase">Contact</h2>
-                </div>
-                <div class="font-mono text-xs text-white/40 border-l-2 border-f1Red pl-4">
-                    Available for<br>collaboration
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-                <!-- Contact info panel -->
-                <div class="lg:col-span-5 glass-panel p-6 sm:p-8 rounded-2xl space-y-6">
-                    <div>
-                        <h3 class="font-tech font-extrabold text-lg text-white uppercase tracking-wider mb-2">Contact details</h3>
-                        <p class="text-subtleGray text-sm">For project inquiries, internships, collaborations, or general questions, feel free to reach out through email or connect through my professional profiles.</p>
-                    </div>
-                    <div class="space-y-4 font-mono text-xs">
-                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-4">
-                            <div class="w-10 h-10 bg-f1Red/10 rounded-lg flex items-center justify-center text-lg text-f1Red border border-f1Red/20"><i class="fa-solid fa-envelope"></i></div>
-                            <div>
-                                <span class="text-white/40 block uppercase">Email</span>
-                                <a href="mailto:aquinoclarence89@gmail.com" class="text-white font-bold hover:text-f1Red transition-colors">aquinoclarence89@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-4">
-                            <div class="w-10 h-10 bg-telemetryBlue/10 rounded-lg flex items-center justify-center text-lg text-telemetryBlue border border-telemetryBlue/20"><i class="fa-solid fa-location-dot"></i></div>
-                            <div>
-                                <span class="text-white/40 block uppercase">Location</span>
-                                <span class="text-white font-bold">Pampanga, Central Luzon, Philippines</span>
-                            </div>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-4">
-                            <div class="w-10 h-10 bg-telemetryGreen/10 rounded-lg flex items-center justify-center text-lg text-telemetryGreen border border-telemetryGreen/20"><i class="fa-solid fa-headset"></i></div>
-                            <div>
-                                <span class="text-white/40 block uppercase">Availability</span>
-                                <span class="text-telemetryGreen font-bold flex items-center gap-1.5">
-                                    <span class="w-2 h-2 bg-telemetryGreen rounded-full animate-ping"></span>Open to opportunities
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact form -->
-                <div class="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-2xl relative">
-                    <div class="absolute top-0 right-12 w-16 h-[2px] bg-telemetryBlue"></div>
-                    <h3 class="font-tech font-extrabold text-lg text-white uppercase tracking-wider mb-6 flex items-center gap-2">
-                        <i class="fa-solid fa-paper-plane text-f1Red"></i> Send a message
-                    </h3>
-
-                    <form id="consoleContactForm" class="space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="font-mono text-xs text-white/60 uppercase block">Name</label>
-                                <input type="text" id="contact-name" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-f1Red transition-colors duration-200" placeholder="Your name">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="font-mono text-xs text-white/60 uppercase block">Email</label>
-                                <input type="email" id="contact-email" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-telemetryBlue transition-colors duration-200" placeholder="name@example.com">
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="font-mono text-xs text-white/60 uppercase block">Subject</label>
-                            <input type="text" id="contact-subject" required class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-f1Red transition-colors duration-200" placeholder="Project inquiry, internship, collaboration...">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="font-mono text-xs text-white/60 uppercase block">Message</label>
-                            <textarea id="contact-message" required rows="5" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-white focus:outline-none focus:border-telemetryBlue transition-colors duration-200 resize-none" placeholder="Tell me about your project or how you'd like to connect.">Hi Clarence, </textarea>
-                        </div>
-
-                        <div id="contact-success-msg" class="hidden bg-telemetryGreen/10 border border-telemetryGreen/20 p-4 rounded-xl flex items-center gap-3 text-telemetryGreen font-mono text-xs">
-                            <i class="fa-solid fa-circle-check text-base"></i>
-                            <div>
-                                <span class="font-bold uppercase block">Message sent</span>
-                                <span>Thanks for reaching out. I’ll get back to you as soon as possible.</span>
-                            </div>
-                        </div>
-
-                        <button type="submit" id="contact-submit-btn" class="w-full relative px-6 py-4 bg-f1Red hover:bg-f1Red/90 text-white font-tech font-bold text-sm tracking-wider uppercase rounded-xl transition-all duration-300 border border-white/20 flex items-center justify-center gap-2">
-                        <span class="skew-x-[10deg] flex items-center gap-2">
-                            SEND MESSAGE <i class="fa-solid fa-paper-plane"></i>
-                            </span>
-                        </button>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════
-         FOOTER
-    ═══════════════════════════════════════ -->
-    <footer class="border-t border-white/5 bg-black/40 py-12 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6 relative z-10 font-mono text-xs text-white/40">
-            <div class="flex items-center gap-3">
-                <span class="font-tech font-extrabold text-white text-base tracking-wider">CLARENCE AQUINO</span>
-                <span class="w-[1px] h-4 bg-white/10"></span>
-                <span>© 2026 CSA</span>
-            </div>
-            <div class="flex flex-wrap items-center justify-center gap-6">
-                <span class="flex items-center gap-1.5 text-telemetryGreen">
-                    <span class="w-2 h-2 bg-telemetryGreen rounded-full animate-ping"></span>CONSOLE_STATUS: PASS
-                </span>
-                <span> CpE Student </span>
-                <span id="system-time">GMT+8: 00:00:00</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Back-to-top button -->
-    <button id="back-to-pit" class="fixed bottom-6 right-6 z-50 p-4 bg-f1Red hover:bg-f1Red/90 text-white rounded-br-2xl transform skew-x-[-10deg] border-t border-r border-white/30 shadow-2xl transition-all duration-300 translate-y-24 opacity-0 hover:scale-110 flex items-center justify-center" aria-label="Back to pit lane">
-        <div class="skew-x-[10deg] flex flex-col items-center gap-1">
-            <i class="fa-solid fa-angles-up animate-bounce"></i>
-            <span class="font-mono text-[8px] tracking-widest font-bold uppercase">UP TOP</span>
-        </div>
-    </button>
-
-    <!-- Showcase modal -->
-    <div id="showcase-modal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/80 backdrop-blur-md px-4" aria-hidden="true">
-        <div class="absolute inset-0" data-showcase-close></div>
-        <div class="relative z-10 w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-darkBg shadow-2xl">
-            <div class="flex items-center justify-between border-b border-white/10 px-5 py-4">
-                <div>
-                    <p id="showcase-modal-title" class="font-tech text-lg font-bold text-white">Showcase</p>
-                    <p id="showcase-modal-caption" class="font-mono text-[10px] uppercase tracking-widest text-white/40">Preview</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span id="showcase-modal-counter" class="font-mono text-[10px] uppercase tracking-widest text-white/40">1 / 1</span>
-                    <button type="button" class="rounded-full border border-white/10 px-3 py-2 text-sm text-white/70 transition-colors hover:bg-white/5 hover:text-white" data-showcase-close aria-label="Close showcase">Close</button>
-                </div>
-            </div>
-            <div class="bg-black/40 p-4 sm:p-6">
-                <div class="relative">
-                    <img id="showcase-modal-image" src="" alt="Showcase preview" class="h-auto w-full rounded-2xl border border-white/10 object-cover shadow-2xl">
-                    <button type="button" data-showcase-prev class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-black/50 px-3 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-black/70 hover:text-white" aria-label="Previous image">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <button type="button" data-showcase-next class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-black/50 px-3 py-2 text-sm text-white/80 backdrop-blur-md transition-colors hover:bg-black/70 hover:text-white" aria-label="Next image">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+<body class="font-sans antialiased selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black overflow-x-hidden relative">
+
+  <!-- Technical Alignment Grid -->
+  <div class="fixed inset-0 bg-grid z-0"></div>
+
+  <!-- Minimal Theme Transition Fade Overlay -->
+  <div id="transition-overlay" class="fixed inset-0 z-50 overflow-hidden"></div>
+
+  <!-- 1. THE ISOLATED MODE CONTROLLER (Top-Right) -->
+  <button id="theme-toggle" aria-label="Toggle Theme" class="fixed top-6 md:top-8 right-6 md:right-8 z-50 flex items-center space-x-3 group bg-architecturalCream/80 dark:bg-deepObsidian/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-800 px-4 py-2 rounded-none font-mono text-xs tracking-widest transition-all duration-300 hover:border-current">
+    <span class="relative flex h-2 w-2">
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-neutral-400 dark:bg-neutral-600"></span>
+    </span>
+    <span class="group-hover:text-emerald-500 transition-colors uppercase" id="mode-text">DARK MODE</span>
+  </button>
+
+  <!-- MOBILE FLOATING MENU TRIGGER -->
+  <button id="mobile-menu-trigger" aria-label="Open Navigation" class="md:hidden fixed top-6 left-6 z-50 flex items-center justify-center bg-architecturalCream/80 dark:bg-deepObsidian/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-800 px-4 py-2 font-mono text-xs tracking-widest transition-all duration-300 hover:border-current">
+    MENU
+  </button>
+
+  <!-- MOBILE FULL SCREEN MENU OVERLAY -->
+  <div id="mobile-menu" class="fixed inset-0 bg-architecturalCream dark:bg-deepObsidian z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-8">
+    <div class="flex justify-between items-center">
+      <span class="font-mono text-xs text-neutral-400">NAVIGATION</span>
+      <button id="mobile-menu-close" class="font-mono text-xs uppercase tracking-widest hover:text-emerald-500">CLOSE</button>
+    </div>
+    <div class="flex flex-col space-y-8 my-auto">
+  <a href="#about" class="mobile-nav-link text-3xl font-light font-mono uppercase tracking-wider text-neutral-700 hover:text-neutral-900 dark:hover:text-neutral-500">About</a>
+  <a href="#skills" class="mobile-nav-link text-3xl font-light font-mono uppercase tracking-wider text-neutral-700 hover:text-neutral-900 dark:hover:text-neutral-200">Skills</a>
+  <a href="#projects" class="mobile-nav-link text-3xl font-light font-mono uppercase tracking-wider text-neutral-700 hover:text-neutral-900 dark:hover:text-neutral-200">Projects</a>
+  <a href="#experience" class="mobile-nav-link text-3xl font-light font-mono uppercase tracking-wider text-neutral-700 hover:text-neutral-900 dark:hover:text-neutral-200">Experience</a>
+  <a href="#contact" class="mobile-nav-link text-3xl font-light font-mono uppercase tracking-wider text-neutral-700 hover:text-neutral-900 dark:hover:text-neutral-200">Contact</a>
+</div>
+    <div class="font-mono text-[10px] text-neutral-400 text-center">
+      CA — PORTFOLIO 2026
+    </div>
+  </div>
+
+  <!-- 2. THE VERTICAL SIDEBAR NAVIGATION (Left Side - Desktop Only) -->
+  <nav class="hidden md:flex fixed left-0 top-0 h-screen w-16 md:w-20 z-40 border-r border-neutral-300 dark:border-neutral-800 bg-architecturalCream/85 dark:bg-deepObsidian/85 backdrop-blur-md flex flex-col justify-between items-center py-8">
+    <!-- Top Brand Signifier -->
+    <div class="font-mono text-sm font-bold tracking-wider text-neutral-400 hover:text-current cursor-pointer transition-colors" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+      CA
     </div>
 
-    <!-- External JS — deferred for performance -->
-    <script src="main.js" defer></script>
+    <!-- Center Navigation Rotated 90 Degrees -->
+    <div class="flex flex-col space-y-12 my-auto items-center">
+      <a href="#about" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-1000 dark:text-neutral-200 hover:text-neutral-1000 dark:hover:text-neutral-200 transition-all duration-300 py-2 relative group">
+        ABOUT
+        <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
+      </a>
+      <a href="#skills" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+        SKILLS
+        <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
+      </a>
+      <a href="#projects" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+        PROJECTS
+        <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
+      </a>
+      <a href="#experience" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+        EXPERIENCE
+        <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
+      </a>
+      <a href="#contact" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+        CONTACT
+        <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
+      </a>
+    </div>
+
+    <!-- Bottom dot indicator -->
+    <div class="flex items-center justify-center">
+      <div class="w-1.5 h-1.5 bg-neutral-400 dark:bg-neutral-600 rounded-full"></div>
+    </div>
+  </nav>
+
+  <!-- MAIN CANVAS CONTAINER -->
+  <main class="pl-0 md:pl-20 min-h-screen relative z-10">
+
+    <!-- 3. SECTION 1: TITLE HERO LANDING -->
+    <section id="hero" class="min-h-screen flex flex-col justify-between p-6 sm:p-12 md:p-16 lg:p-24 relative overflow-hidden border-b border-neutral-200 dark:border-neutral-900">
+      
+      <!-- Minimal Header Information -->
+      <div class="flex justify-between items-start pt-16 md:pt-4">
+        <div class="font-mono text-[10px] sm:text-xs text-neutral-1200 dark:text-brushedNickel">
+          <span>PORTFOLIO — 2026 EDITION</span>
+        </div>
+      </div>
+
+      <!-- Core Structural Name & Description Block -->
+      <div class="my-auto py-12 md:py-0">
+        <!-- Clean Layout Line Accent -->
+        <div class="h-[1px] w-16 md:w-32 bg-neutral-400 dark:bg-neutral-800 mb-8"></div>
+        
+        <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[9.5rem] font-light tracking-tight leading-none uppercase font-mono mb-6 md:mb-10 break-words">
+          Clarence<br>
+          <span class="font-bold relative text-emerald-950 dark:text-neutral-100">Aquino<span class="text-emerald-500">.</span></span>
+        </h1>
+        
+        <div class="max-w-4xl">
+          <p class="text-lg sm:text-xl md:text-3xl text-neutral-500 dark:text-brushedNickel font-light leading-relaxed font-sans">
+            Developing web applications, software systems, and computational tools that blend functionality, performance, and usability. Passionate about transforming ideas into practical solutions through modern software engineering.
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer navigation hints -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end space-y-4 md:space-y-0 border-t border-neutral-300 dark:border-neutral-800 pt-8">
+        <div class="font-mono text-[10px] sm:text-xs text-neutral-1200 dark:text-neutral-700 flex flex-wrap gap-4 sm:gap-6 items-center">
+          <span>SOFTWARE ENGINEERING</span>
+          <span class="hidden sm:inline">•</span>
+          <span>WEB APPLICATIONS</span>
+          <span class="hidden sm:inline">•</span>
+          <span>COMPUTER ENGINEERING</span>
+        </div>
+        <div class="font-mono text-xs text-neutral-500 dark:text-brushedNickel">
+          <a href="#about" class="group flex items-center space-x-2 text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors duration-200">
+            <span>SCROLL TO EXPLORE</span>
+            <span class="group-hover:translate-y-1 transition-transform duration-300">↓</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SECTION 2: ABOUT / PROFILE SYSTEM -->
+    <section id="about" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 flex flex-col justify-center">
+      <div class="max-w-7xl mx-auto w-full">
+        
+        <!-- Section Header -->
+        <div class="flex items-center space-x-4 mb-16 md:mb-24">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-mono uppercase tracking-widest text-neutral-500 dark:text-brushedNickel">About Me</h2>
+          <div class="flex-grow h-[1px] bg-neutral-300 dark:bg-neutral-800"></div>
+          <div class="w-2 h-2 rounded-full border border-neutral-400 dark:border-neutral-700"></div>
+        </div>
+
+        <!-- Split Grid Architectural Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+          
+          <!-- Left Column: Elegant Visual Schematic Frame -->
+          <div class="lg:col-span-5 relative group max-w-md mx-auto lg:max-w-none w-full">
+            
+            <!-- Structural Layout Frame Corners -->
+            <div class="absolute -top-3 -left-3 w-6 h-6 border-t border-l border-neutral-400 dark:border-neutral-700"></div>
+            <div class="absolute -bottom-3 -right-3 w-6 h-6 border-b border-r border-neutral-400 dark:border-neutral-700"></div>
+            
+            <div class="relative overflow-hidden bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-800 p-2 transition-all duration-500">
+              <div class="absolute inset-0 bg-neutral-900/5 dark:bg-white/5 mix-blend-overlay z-10 pointer-events-none"></div>
+              
+              <!-- Clean structural alignment grid line artwork -->
+              <svg class="absolute inset-0 w-full h-full text-emerald-500/20 dark:text-emerald-400/10 pointer-events-none p-4 z-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line x1="10" y1="10" x2="90" y2="10" stroke="currentColor" stroke-width="0.25" stroke-dasharray="1 1"/>
+                <line x1="10" y1="90" x2="90" y2="90" stroke="currentColor" stroke-width="0.25" stroke-dasharray="1 1"/>
+                <line x1="10" y1="10" x2="10" y2="90" stroke="currentColor" stroke-width="0.25" stroke-dasharray="1 1"/>
+                <line x1="90" y1="10" x2="90" y2="90" stroke="currentColor" stroke-width="0.25" stroke-dasharray="1 1"/>
+                <circle cx="10" cy="10" r="1" fill="currentColor"/>
+                <circle cx="90" cy="10" r="1" fill="currentColor"/>
+                <circle cx="10" cy="90" r="1" fill="currentColor"/>
+                <circle cx="90" cy="90" r="1" fill="currentColor"/>
+                <path d="M 10 50 L 35 50 L 50 65 L 90 65" fill="none" stroke="currentColor" stroke-width="0.5" />
+                <path d="M 50 10 L 50 45 L 65 60 L 65 90" fill="none" stroke="currentColor" stroke-width="0.25" />
+              </svg>
+
+              <!-- Main Minimal Design Image -->
+              <div class="w-full aspect-[4/5] bg-neutral-300 dark:bg-neutral-900 flex flex-col justify-center items-center text-center p-6 relative">
+                <div class="border border-dashed border-neutral-400 dark:border-neutral-800 p-8 rounded-full mb-4">
+                  <svg class="w-16 h-16 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                  </svg>
+                </div>
+                <div class="font-sans text-xs text-neutral-600 dark:text-neutral-400 mt-2 px-6 font-medium">Clarence Aquino</div>
+                <div class="font-sans text-[11px] text-neutral-400 dark:text-neutral-500 mt-1 uppercase tracking-wider">Systems Architect & Developer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Biography details -->
+          <div class="lg:col-span-7 space-y-8">
+            <h3 class="text-2xl sm:text-3xl font-light text-neutral-800 dark:text-neutral-200">
+              Building software solutions through a strong foundation in computer engineering principles.
+            </h3>
+            
+            <p class="text-neutral-700 dark:text-brushedNickel text-base sm:text-lg leading-relaxed font-light">
+              I am a Computer Engineering student with interests in software development, web technologies, and system design. My projects range from interactive web applications and algorithm visualizers to IoT and embedded systems, allowing me to explore both software and hardware domains.
+            </p>
+
+            <p class="text-neutral-700 dark:text-brushedNickel text-base sm:text-lg leading-relaxed font-light">
+              I enjoy solving complex problems, learning modern technologies, and developing applications that are efficient, reliable, and user-focused.
+            </p>
+
+            <!-- Technical Specification Meta List -->
+            <div class="border-t border-b border-neutral-300 dark:border-neutral-800 py-6 grid grid-cols-2 sm:grid-cols-4 gap-6 font-mono text-xs">
+              <div>
+                <div class="text-neutral-400 uppercase">Location</div>
+                <div class="font-bold text-neutral-800 dark:text-neutral-200 mt-1">Pampanga, PH</div>
+              </div>
+              <div>
+                <div class="text-neutral-400 uppercase">Education</div>
+                <div class="font-bold text-neutral-800 dark:text-neutral-200 mt-1">B.S. Computer Eng.</div>
+              </div>
+              <div>
+                <div class="text-neutral-400 uppercase">Focus</div>
+                <div class="font-bold text-neutral-800 dark:text-neutral-200 mt-1">Software Engineering</div>
+              </div>
+              <div>
+                <div class="text-neutral-400 uppercase">Interest</div>
+                <div class="font-bold text-neutral-800 dark:text-neutral-200 mt-1">Cybersecurity & Software Development</div>
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <a href="#skills" class="inline-flex items-center space-x-3 text-neutral-800 dark:text-neutral-200 hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors duration-200 font-mono text-xs tracking-wider">
+                <span>VIEW TECHNICAL SKILLS</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. SECTION 3: TECHNICAL SKILLS MATRIX -->
+    <section id="skills" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 bg-neutral-200/20 dark:bg-deepObsidian/20 relative">
+      <div class="max-w-7xl mx-auto w-full">
+        
+        <!-- Section Header -->
+        <div class="flex items-center space-x-4 mb-16 md:mb-24">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-mono uppercase tracking-widest text-neutral-500 dark:text-brushedNickel">Skills Overview</h2>
+          <div class="flex-grow h-[1px] bg-neutral-300 dark:bg-neutral-800"></div>
+          <div class="w-2 h-2 rounded-full border border-neutral-400 dark:border-neutral-700"></div>
+        </div>
+
+        <!-- Master Unified Card Container -->
+        <div class="relative border border-neutral-300 dark:border-neutral-800 bg-architecturalCream/50 dark:bg-deepObsidian/30 backdrop-blur-md p-6 sm:p-10 md:p-16 transition-all duration-300 hover:border-neutral-400 dark:hover:border-neutral-700">
+          
+          <!-- Blueprint Corner Accents -->
+          <div class="absolute -top-1 -left-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full"></div>
+          <div class="absolute -top-1 -right-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full"></div>
+          <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full"></div>
+          <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full"></div>
+
+          <!-- Horizontal Segment Stack Layout -->
+          <div class="space-y-12 md:space-y-16 divide-y divide-neutral-300 dark:divide-neutral-800">
+            
+            <!-- Row 1: Programming -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-0 items-center">
+              <div class="lg:col-span-4">
+                <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Core languages</span>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Programming</h3>
+              </div>
+              <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">HTML</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">C++</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">JavaScript</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Python</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">PHP</span>
+              </div>
+            </div>
+
+            <!-- Row 2: Embedded -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-12 md:pt-16 items-center">
+              <div class="lg:col-span-4">
+                <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Hardware focus</span>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Embedded</h3>
+              </div>
+              <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Microcontrollers</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">DSP</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">IoT</span>
+              </div>
+            </div>
+
+            <!-- Row 3: Databases -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-12 md:pt-16 items-center">
+              <div class="lg:col-span-4">
+                <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Data layer</span>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Databases</h3>
+              </div>
+              <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">MySQL</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Firebase</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Backend</span>
+              </div>
+            </div>
+
+            <!-- Row 4: Tools -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-12 md:pt-16 items-center">
+              <div class="lg:col-span-4">
+                <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Workflow</span>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Tools</h3>
+              </div>
+              <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Git</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">VS Code</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">GitHub</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">CLI</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Arduino IDE</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">XAMPP</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. SECTION 4: FEATURED PROJECTS CAROUSEL -->
+    <section id="projects" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 flex flex-col justify-center">
+      <div class="max-w-7xl mx-auto w-full">
+        
+        <!-- Section Header -->
+        <div class="flex items-center space-x-4 mb-16 md:mb-20">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-mono uppercase tracking-widest text-neutral-500 dark:text-brushedNickel">Featured Projects</h2>
+          <div class="flex-grow h-[1px] bg-neutral-300 dark:bg-neutral-800"></div>
+          <div class="w-2 h-2 rounded-full border border-neutral-400 dark:border-neutral-700"></div>
+        </div>
+
+        <!-- Carousel Frame Viewport -->
+        <div class="relative overflow-hidden border border-neutral-300 dark:border-neutral-800 bg-architecturalCream dark:bg-[#191b1c] p-6 md:p-12 transition-all duration-500">
+          
+          <div class="absolute top-0 bottom-0 left-[41.6%] w-[1px] bg-neutral-200 dark:bg-neutral-800/60 pointer-events-none hidden lg:block"></div>
+          
+          <!-- Carousel Active Slide Container -->
+          <div class="relative min-h-[450px] flex flex-col justify-between">
+            
+            <!-- Active Slide Content Holder -->
+            <div id="carousel-slide-content" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+              
+              <!-- Left Detail Column (lg:col-span-5 for text details) -->
+              <div class="lg:col-span-5 space-y-6 flex flex-col justify-between">
+                <div class="space-y-6">
+                  <div class="flex items-center space-x-3">
+                    <span id="proj-index" class="font-mono text-xs text-emerald-600 dark:text-mintEmerald tracking-widest">01 / 03</span>
+                  </div>
+                  
+                  <h3 id="proj-title" class="text-2xl sm:text-3xl md:text-4xl font-mono uppercase font-bold tracking-tight text-neutral-800 dark:text-neutral-100 transition-all duration-300">
+                    Custom RISC-V Soft Core FPGA
+                  </h3>
+                  
+                  <p id="proj-desc" class="text-neutral-500 dark:text-brushedNickel text-base leading-relaxed font-light transition-all duration-300">
+                    A custom 32-bit Harvard Architecture processor designed in Verilog and synthesis-optimized for Cyclone IV devices. Integrates memory mapping modules, UART, and dedicated PWM controllers for fast real-time hardware execution triggers.
+                  </p>
+
+                  <!-- Direct Project Deployment Links -->
+                  <div class="flex flex-wrap gap-4 pt-2 font-mono text-xs">
+                    <a id="proj-github" href="#" target="_blank" class="inline-flex items-center space-x-1.5 text-neutral-800 dark:text-neutral-200 hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors border border-neutral-300 dark:border-neutral-800 px-3 py-1.5 bg-neutral-100/30 dark:bg-neutral-900/30">
+                      <span>GITHUB REPO</span>
+                      <span class="text-[10px]">↗</span>
+                    </a>
+                    <a id="proj-live" href="#" target="_blank" class="inline-flex items-center space-x-1.5 text-neutral-800 dark:text-neutral-200 hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors border border-neutral-300 dark:border-neutral-800 px-3 py-1.5 bg-neutral-100/30 dark:bg-neutral-900/30">
+                      <span>LIVE WEBSITE</span>
+                      <span class="text-[10px]">↗</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Project Specs Table -->
+                <div class="border-t border-neutral-300 dark:border-neutral-800 pt-6 grid grid-cols-3 gap-4 font-mono text-xs">
+                  <div>
+                    <div class="text-neutral-400 uppercase">Tech</div>
+                    <div id="proj-lang" class="flex flex-wrap gap-2 font-bold text-neutral-800 dark:text-neutral-200 mt-1"></div>
+                  </div>
+                  <div>
+                    <div class="text-neutral-400 uppercase">INTERFACE</div>
+                    <div id="proj-interface" class="font-bold text-neutral-800 dark:text-neutral-200 mt-1">AXI4-Lite</div>
+                  </div>
+                  <div>
+                    <div class="text-neutral-400 uppercase">PLATFORM</div>
+                    <div id="proj-devices" class="font-bold text-neutral-800 dark:text-neutral-200 mt-1">Altera FPGA</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Visual/Schematic Media Gallery (lg:col-span-7 to expand area) -->
+              <div class="lg:col-span-7 flex flex-col justify-center">
+                <div class="w-full aspect-[16/10] border border-dashed border-neutral-400 dark:border-neutral-800 relative flex flex-col justify-between bg-neutral-200/40 dark:bg-neutral-900/40 overflow-hidden group/gallery">
+                  
+                  <!-- Corner Solder Node Accents -->
+                  <div class="absolute -top-1 -left-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full z-20"></div>
+                  <div class="absolute -top-1 -right-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full z-20"></div>
+                  <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full z-20"></div>
+                  <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full z-20"></div>
+
+                  <!-- Image / Schematic Viewport Layer -->
+                  <div id="media-viewport" class="flex-grow w-full h-full flex items-center justify-center relative select-none">
+                    <img id="gallery-img" src="img/dsp.png" alt="Project Presentation" class="w-full h-full object-cover transition-opacity duration-300" onerror="handleImageFallback()" />
+                    <div id="gallery-svg-container" class="absolute inset-0 flex items-center justify-center text-emerald-700 dark:text-mintEmerald opacity-85 hidden">
+                      <!-- Fallback vector markup goes here dynamically if image load fails -->
+                    </div>
+                  </div>
+
+                  <!-- Micro Floating Gallery Navigation Buttons inside Visual frame -->
+                  <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-300 z-30">
+                    <button id="gallery-prev" aria-label="Previous image" class="pointer-events-auto w-10 h-10 rounded-full bg-architecturalCream/95 dark:bg-deepObsidian/95 border border-neutral-300 dark:border-neutral-800 flex items-center justify-center text-neutral-800 dark:text-neutral-200 hover:border-emerald-600 dark:hover:border-mintEmerald hover:text-emerald-600 dark:hover:text-mintEmerald transition-all duration-200 font-mono text-sm shadow-md">
+                      ←
+                    </button>
+                    <button id="gallery-next" aria-label="Next image" class="pointer-events-auto w-10 h-10 rounded-full bg-architecturalCream/95 dark:bg-deepObsidian/95 border border-neutral-300 dark:border-neutral-800 flex items-center justify-center text-neutral-800 dark:text-neutral-200 hover:border-emerald-600 dark:hover:border-mintEmerald hover:text-emerald-600 dark:hover:text-mintEmerald transition-all duration-200 font-mono text-sm shadow-md">
+                      →
+                    </button>
+                  </div>
+
+                  <!-- Gallery Caption and Indicator Bar -->
+                  <div class="w-full border-t border-neutral-300 dark:border-neutral-800 bg-architecturalCream/90 dark:bg-deepObsidian/90 backdrop-blur-sm p-3 flex justify-between items-center font-mono text-[10px] tracking-wider z-10">
+                    <span id="gallery-caption" class="text-neutral-600 dark:text-brushedNickel uppercase truncate max-w-[70%]">Loading layout...</span>
+                    <span id="gallery-counter" class="text-emerald-600 dark:text-mintEmerald whitespace-nowrap">01 / 01</span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Carousel Controls and Pagination -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-between items-center border-t border-neutral-300 dark:border-neutral-800 pt-8 mt-12">
+              <div class="font-mono text-[10px] sm:text-xs text-neutral-400 dark:text-neutral-500">
+                PORTFOLIO PROJECT PORTAL
+              </div>
+              <div class="flex items-center space-x-6">
+                <!-- Left Nav Arrow Button -->
+                <button id="carousel-prev" aria-label="Previous Project" class="group flex items-center space-x-2 font-mono text-xs text-neutral-500 dark:text-brushedNickel hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors duration-200 py-2 px-3">
+                  <span class="group-hover:-translate-x-1.5 transition-transform duration-300">←</span>
+                  <span>PREVIOUS</span>
+                </button>
+                <span class="text-neutral-300 dark:text-neutral-800">/</span>
+                <!-- Right Nav Arrow Button -->
+                <button id="carousel-next" aria-label="Next Project" class="group flex items-center space-x-2 font-mono text-xs text-neutral-500 dark:text-brushedNickel hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors duration-200 py-2 px-3">
+                  <span>NEXT</span>
+                  <span class="group-hover:translate-x-1.5 transition-transform duration-300">→</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. SECTION 5: PROFESSIONAL EXPERIENCE -->
+    <section id="experience" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 bg-neutral-200/20 dark:bg-deepObsidian/20">
+      <div class="max-w-7xl mx-auto w-full">
+        
+        <!-- Section Header -->
+        <div class="flex items-center space-x-4 mb-16 md:mb-24">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-mono uppercase tracking-widest text-neutral-500 dark:text-brushedNickel">Experience</h2>
+          <div class="flex-grow h-[1px] bg-neutral-300 dark:bg-neutral-800"></div>
+          <div class="w-2 h-2 rounded-full border border-neutral-400 dark:border-neutral-700"></div>
+        </div>
+
+        <!-- Architectural Vertical Timeline Connected by Trace Lines -->
+        <div class="relative pl-6 md:pl-12 border-l border-neutral-300 dark:border-neutral-800 space-y-16 py-4">
+          
+          <!-- Node 1 -->
+          <div class="relative">
+            <span class="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 w-6 md:w-12 h-[1px] bg-neutral-300 dark:bg-neutral-800"></span>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+              <!-- Left timeline label meta details -->
+              <div class="lg:col-span-4 font-mono">
+                <div class="text-emerald-600 dark:text-mintEmerald text-sm font-bold">INTERN</div>
+                <div class="text-neutral-400 text-xs mt-1">JUN 2026 — PRESENT</div>
+                <div class="text-neutral-800 dark:text-neutral-200 text-lg font-bold uppercase mt-2">Dakila Soft</div>
+              </div>
+              
+              <!-- Right timeline bullet summary -->
+              <div class="lg:col-span-8 space-y-3">
+                <h4 class="text-xl font-medium text-neutral-800 dark:text-neutral-200">Computer Engineering Student – Software & IoT Development</h4>
+                <p class="text-neutral-500 dark:text-brushedNickel font-light">
+                  Developing web applications and IoT systems using Python and Django. Focused on building RESTful APIs, backend services, and connected devices that communicate through networked systems. Projects integrate software development with IoT hardware concepts to create real-time data-driven applications.</p>
+                </p>
+                <div class="flex flex-wrap gap-2 pt-2">
+                  <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">Python</span>
+                  <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">Django</span>
+                  <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">Rest</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 2 -->
+          <div class="relative">
+            <span class="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 w-6 md:w-12 h-[1px] bg-neutral-300 dark:bg-neutral-800"></span>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+              <!-- Left timeline label meta details -->
+              <div class="lg:col-span-4 font-mono">
+                <div class="text-emerald-600 dark:text-mintEmerald text-sm font-bold">STUDENT</div>
+                <div class="text-neutral-400 text-xs mt-1">AUG 2023 — PRESENT</div>
+                <div class="text-neutral-800 dark:text-neutral-200 text-lg font-bold uppercase mt-2">Pampanga State University</div>
+              </div>
+              
+              <!-- Right timeline bullet summary -->
+              <div class="lg:col-span-8 space-y-3">
+                <h4 class="text-xl font-medium text-neutral-800 dark:text-neutral-200">B.S. Computer Engineering</h4>
+                <p class="text-neutral-500 dark:text-brushedNickel font-light">
+                  Studying core Computer Engineering concepts including software development, embedded systems, and computer architecture. Built academic and personal projects involving web applications, IoT systems, and system simulations using Python, Django, and JavaScript. Focused on applying engineering principles to real-world software and hardware integration problems.
+                </p>
+                <div class="flex flex-wrap gap-2 pt-2">
+                  <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">Software Development</span>
+                  <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">Web Applications</span>
+                  <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">IoT Systems</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 8. SECTION 6: CONTACT CHANNEL -->
+    <section id="contact" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 flex flex-col justify-between">
+      <div class="max-w-7xl mx-auto w-full my-auto">
+        
+        <!-- Section Header -->
+        <div class="flex items-center space-x-4 mb-16 md:mb-24">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-mono uppercase tracking-widest text-neutral-500 dark:text-brushedNickel">Get In Touch</h2>
+          <div class="flex-grow h-[1px] bg-neutral-300 dark:bg-neutral-800"></div>
+          <div class="w-2 h-2 rounded-full border border-neutral-400 dark:border-neutral-700"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+          
+                <!-- Left Instructions Column -->
+        <div class="lg:col-span-5 space-y-6">
+        <h3 class="text-2xl sm:text-3xl font-light text-neutral-800 dark:text-neutral-200">
+            Interested in working together?
+        </h3>
+
+        <p class="text-neutral-500 dark:text-brushedNickel leading-relaxed font-light">
+            I’m open to collaboration, internships, and project opportunities in software development, web applications, and IoT systems. Feel free to reach out through the form if you want to build something together or discuss engineering ideas.
+        </p>
+
+        <div class="font-mono text-xs text-neutral-400 space-y-2 pt-6">
+
+            <!-- EMAIL -->
+            <div class="flex justify-between border-b border-neutral-300 dark:border-neutral-800 pb-2 group transition-all duration-300 hover:pl-2 hover:border-emerald-500/40">
+            <span class="text-neutral-400 group-hover:text-emerald-500 transition-colors duration-300">EMAIL:</span>
+            <a href="mailto:aquinoclarence89@gmail.com"
+                class="text-neutral-800 dark:text-neutral-200 font-medium break-all
+                        transition-all duration-300 group-hover:text-emerald-500 group-hover:translate-x-1">
+                Email Me
+            </a>
+            </div>
+
+            <!-- GITHUB -->
+            <div class="flex justify-between border-b border-neutral-300 dark:border-neutral-800 pb-2 group transition-all duration-300 hover:pl-2 hover:border-emerald-500/40">
+            <span class="text-neutral-400 group-hover:text-emerald-500 transition-colors duration-300">GITHUB:</span>
+            <a href="https://github.com/clarencze"
+                target="_blank"
+                class="text-neutral-800 dark:text-neutral-200 font-medium break-all
+                        transition-all duration-300 group-hover:text-emerald-500 group-hover:translate-x-1">
+                View GitHub
+            </a>
+            </div>
+
+            <!-- LINKEDIN -->
+            <div class="flex justify-between border-b border-neutral-300 dark:border-neutral-800 pb-2 group transition-all duration-300 hover:pl-2 hover:border-emerald-500/40">
+            <span class="text-neutral-400 group-hover:text-emerald-500 transition-colors duration-300">LINKEDIN:</span>
+            <a href="https://www.linkedin.com/in/clarence-aquino-3b7141417/"
+                target="_blank"
+                class="text-neutral-800 dark:text-neutral-200 font-medium break-all
+                        transition-all duration-300 group-hover:text-emerald-500 group-hover:translate-x-1">
+                Connect on LinkedIn
+            </a>
+            </div>
+
+        </div>
+        </div>
+
+        <!-- Right Form Column -->
+        <div class="lg:col-span-7 w-full">
+
+        <form id="contact-form" class="space-y-8 font-mono text-xs" data-start-time="">
+
+            <!-- 🛡️ HONEYPOT (hidden field for bots) -->
+            <input type="text" id="website" name="website"
+            class="hidden"
+            autocomplete="off"
+            tabindex="-1" />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- User Name input -->
+            <div class="group">
+                <label for="form-name"
+                class="block mb-2 text-[10px] text-neutral-400 uppercase tracking-wider transition-colors duration-300 group-focus-within:text-emerald-600 dark:group-focus-within:text-mintEmerald">
+                YOUR NAME
+                </label>
+                <input type="text" id="form-name" required placeholder=" "
+                class="w-full bg-transparent border-b border-neutral-300 py-3 text-neutral-800 dark:text-neutral-100 focus:outline-none focus:border-emerald-600 dark:focus:border-mintEmerald transition-all duration-300" />
+            </div>
+
+            <!-- User Email input -->
+            <div class="group">
+                <label for="form-email"
+                class="block mb-2 text-[10px] text-neutral-400 uppercase tracking-wider transition-colors duration-300 group-focus-within:text-emerald-600 dark:group-focus-within:text-mintEmerald">
+                YOUR EMAIL
+                </label>
+                <input type="email" id="form-email" required placeholder=" "
+                class="w-full bg-transparent border-b border-neutral-300 py-3 text-neutral-800 dark:text-neutral-100 focus:outline-none focus:border-emerald-600 dark:focus:border-mintEmerald transition-all duration-300" />
+            </div>
+            </div>
+
+            <!-- Message input -->
+            <div class="group">
+            <label for="form-message"
+                class="block mb-2 text-[10px] text-neutral-400 uppercase tracking-wider transition-colors duration-300 group-focus-within:text-emerald-600 dark:group-focus-within:text-mintEmerald">
+                YOUR MESSAGE
+            </label>
+            <textarea id="form-message" required rows="4" placeholder=" "
+                class="w-full bg-transparent border-b border-neutral-300 dark:border-neutral-800 py-3 text-neutral-800 dark:text-neutral-100 focus:outline-none focus:border-emerald-600 dark:focus:border-mintEmerald transition-all duration-300 resize-none"></textarea>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" id="form-submit"
+            class="w-full md:w-auto px-8 py-4 bg-transparent border border-neutral-400 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 uppercase tracking-[0.2em] font-bold hover:bg-neutral-800 hover:text-white dark:hover:bg-neutral-100 dark:hover:text-black hover:border-transparent transition-all duration-300 flex items-center justify-center space-x-3">
+            <span id="submit-text">SEND MESSAGE</span>
+            <span id="submit-indicator" class="w-2 h-2 bg-neutral-400 rounded-full"></span>
+            </button>
+
+            <!-- Success Notification -->
+            <div id="form-status"
+            class="hidden p-4 border border-dashed border-emerald-500 text-emerald-600 font-mono text-xs uppercase tracking-wide">
+            Message sent successfully. I will be in touch shortly.
+            </div>
+
+        </form>
+
+        </div>
+
+        </div>
+
+      </div>
+
+      <!-- Base Meta Footer -->
+      <footer class="border-t border-neutral-300 dark:border-neutral-800 pt-8 mt-24 text-center font-mono text-[9px] text-neutral-400 uppercase tracking-widest space-y-2">
+        <div>© 2026 Clarence Aquino. All Rights Reserved.</div>
+        <div class="flex justify-center space-x-4">
+          <span>COMPUTER</span>
+          <span>•</span>
+          <span>ENGINEER</span>
+          <span>•</span>
+          <span>PORTFOLIO</span>
+        </div>
+      </footer>
+    </section>
+
+  </main>
+
+ <script src="main.js"></script>
 </body>
 </html>
