@@ -39,6 +39,53 @@
       text-orientation: mixed;
     }
 
+    /* Hero name text roll animation */
+    .hero-name-roll {
+      overflow-wrap: normal;
+    }
+
+    .hero-text-roll {
+      position: relative;
+      display: block;
+      width: max-content;
+      max-width: 100%;
+      overflow: hidden;
+      line-height: 0.75;
+    }
+
+    .hero-text-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero-text-line.second {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-text-roll span {
+      display: inline-block;
+      transition: transform 0.35s ease-in-out;
+    }
+
+    .hero-text-line.first span {
+      transform: translateY(0);
+    }
+
+    .hero-text-line.second span {
+      transform: translateY(100%);
+    }
+
+    .hero-text-roll:hover .hero-text-line.first span,
+    .hero-text-roll:focus-within .hero-text-line.first span {
+      transform: translateY(-100%);
+    }
+
+    .hero-text-roll:hover .hero-text-line.second span,
+    .hero-text-roll:focus-within .hero-text-line.second span {
+      transform: translateY(0);
+    }
+
     /* Custom Hide Scrollbar but Keep Functionality */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
