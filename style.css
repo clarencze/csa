@@ -222,6 +222,7 @@
       filter: drop-shadow(0 0.25rem 0 rgb(0 0 0 / 0.12));
       transform-origin: center;
       transition: transform 180ms ease;
+      animation: mascot-idle 3.4s ease-in-out infinite;
     }
 
     #mascot.is-facing-left .mascot-robot {
@@ -255,7 +256,41 @@
       border: 1px solid currentColor;
       border-radius: 0.35rem;
       background: var(--bg-color);
-      box-shadow: inset 0 0 0 2px rgb(142 147 150 / 0.15);
+      box-shadow: inset 0 0 0 2px rgb(142 147 150 / 0.15), 0 0 0.8rem rgb(0 168 107 / 0.08);
+    }
+
+    .mascot-head::after {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.35rem;
+      width: 0.25rem;
+      height: 0.25rem;
+      border-radius: 9999px;
+      background: #00a86b;
+      box-shadow: 0 0 0.4rem #00a86b;
+      content: "";
+      animation: mascot-status 1.8s ease-in-out infinite;
+    }
+
+    .mascot-ear {
+      position: absolute;
+      top: 0.8rem;
+      width: 0.28rem;
+      height: 0.85rem;
+      border: 1px solid currentColor;
+      background: var(--bg-color);
+    }
+
+    .mascot-ear-left {
+      right: 100%;
+      border-right: 0;
+      border-radius: 0.2rem 0 0 0.2rem;
+    }
+
+    .mascot-ear-right {
+      left: 100%;
+      border-left: 0;
+      border-radius: 0 0.2rem 0.2rem 0;
     }
 
     .mascot-eyes {
@@ -271,12 +306,142 @@
       animation: mascot-blink 5s infinite;
     }
 
+    .mascot-glasses {
+      position: absolute;
+      top: 0.72rem;
+      left: 50%;
+      display: flex;
+      gap: 0.2rem;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .mascot-glasses::before {
+      position: absolute;
+      top: 0.39rem;
+      left: 50%;
+      width: 0.28rem;
+      height: 1px;
+      background: currentColor;
+      content: "";
+      transform: translateX(-50%);
+    }
+
+    .mascot-glasses::after {
+      position: absolute;
+      top: 0.14rem;
+      left: -0.38rem;
+      width: calc(100% + 0.76rem);
+      height: 1px;
+      background: currentColor;
+      content: "";
+      opacity: 0.75;
+    }
+
+    .mascot-glasses i {
+      width: 1.16rem;
+      height: 0.82rem;
+      border: 2px solid currentColor;
+      border-radius: 0.06rem;
+      background: linear-gradient(135deg, rgb(255 255 255 / 0.2), transparent 55%);
+      box-shadow: inset 0 0 0.35rem rgb(0 168 107 / 0.08);
+    }
+
+    #mascot:hover .mascot-glasses,
+    #mascot.is-talking .mascot-glasses {
+      animation: mascot-glasses-adjust 420ms ease;
+    }
+
     .mascot-mouth {
       width: 0.85rem;
       height: 0.25rem;
       margin-top: 0.45rem;
       border-bottom: 1px solid currentColor;
       border-radius: 0 0 9999px 9999px;
+    }
+
+    .mascot-body {
+      position: relative;
+      display: grid;
+      width: 2.45rem;
+      height: 1.35rem;
+      margin-top: 0.12rem;
+      border: 1px solid currentColor;
+      border-top-color: #00a86b;
+      border-radius: 0.2rem 0.2rem 0.45rem 0.45rem;
+      background: var(--bg-color);
+      place-items: center;
+      box-shadow: inset 0 -0.2rem 0 rgb(142 147 150 / 0.1);
+    }
+
+    .mascot-chest {
+      display: flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.16rem 0.28rem;
+      border: 1px solid rgb(142 147 150 / 0.55);
+      color: #707578;
+      font-family: "Space Grotesk", monospace;
+      font-size: 0.38rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .mascot-chest i {
+      width: 0.22rem;
+      height: 0.22rem;
+      border-radius: 9999px;
+      background: #00a86b;
+    }
+
+    .mascot-chest b {
+      font-weight: 500;
+    }
+
+    .mascot-arm {
+      position: absolute;
+      top: 0.2rem;
+      width: 0.38rem;
+      height: 1rem;
+      border: 1px solid currentColor;
+      border-radius: 9999px;
+      background: var(--bg-color);
+      transform-origin: top center;
+    }
+
+    .mascot-arm-left {
+      right: calc(100% + 0.08rem);
+      transform: rotate(12deg);
+    }
+
+    .mascot-arm-right {
+      left: calc(100% + 0.08rem);
+      transform: rotate(-12deg);
+    }
+
+    #mascot:hover .mascot-arm-right,
+    #mascot.is-talking .mascot-arm-right {
+      animation: mascot-wave 650ms ease-in-out 2;
+    }
+
+    #mascot.is-walking .mascot-robot {
+      animation: mascot-walk-bob 320ms ease-in-out infinite;
+    }
+
+    #mascot.is-walking .mascot-arm-left {
+      animation: mascot-arm-left-walk 420ms ease-in-out infinite alternate;
+    }
+
+    #mascot.is-walking:not(.is-talking) .mascot-arm-right {
+      animation: mascot-arm-right-walk 420ms ease-in-out infinite alternate;
+    }
+
+    #mascot.is-walking .mascot-feet i:first-child {
+      animation: mascot-step-left 320ms ease-in-out infinite alternate;
+    }
+
+    #mascot.is-walking .mascot-feet i:last-child {
+      animation: mascot-step-right 320ms ease-in-out infinite alternate;
     }
 
     .mascot-feet {
@@ -361,6 +526,51 @@
     @keyframes mascot-hop {
       0%, 100% { translate: 0 0; }
       50% { translate: 0 -0.65rem; }
+    }
+
+    @keyframes mascot-idle {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -0.18rem; }
+    }
+
+    @keyframes mascot-status {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes mascot-glasses-adjust {
+      0%, 100% { transform: translate(-50%, 0); }
+      45% { transform: translate(-50%, -0.12rem) rotate(-2deg); }
+    }
+
+    @keyframes mascot-wave {
+      0%, 100% { transform: rotate(-12deg); }
+      50% { transform: rotate(-55deg); }
+    }
+
+    @keyframes mascot-walk-bob {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -0.16rem; }
+    }
+
+    @keyframes mascot-arm-left-walk {
+      from { transform: rotate(24deg); }
+      to { transform: rotate(-18deg); }
+    }
+
+    @keyframes mascot-arm-right-walk {
+      from { transform: rotate(-24deg); }
+      to { transform: rotate(18deg); }
+    }
+
+    @keyframes mascot-step-left {
+      from { transform: translateY(0) rotate(0); }
+      to { transform: translateY(-0.18rem) rotate(8deg); }
+    }
+
+    @keyframes mascot-step-right {
+      from { transform: translateY(-0.18rem) rotate(-8deg); }
+      to { transform: translateY(0) rotate(0); }
     }
 
     .gallery-loading {

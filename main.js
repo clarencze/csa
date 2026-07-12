@@ -437,6 +437,7 @@
     };
     let mascotMoveTimer;
     let mascotTalkTimer;
+    let mascotWalkTimer;
     let mascotDragStartX = 0;
     let mascotDragStartY = 0;
     let mascotDragStartLeft = 0;
@@ -478,6 +479,8 @@
       if (hidden) {
         clearTimeout(mascotMoveTimer);
         clearTimeout(mascotTalkTimer);
+        clearTimeout(mascotWalkTimer);
+        mascot.classList.remove("is-walking");
         cancelAnimationFrame(mascotScrollFrame);
       } else if (announce) {
         clearTimeout(mascotMoveTimer);
@@ -513,8 +516,11 @@
       mascot.classList.toggle("is-facing-left", nextLeft < currentPosition.left);
       updateMascotEdgeState(nextLeft, nextTop);
       mascot.style.bottom = "auto";
+      mascot.classList.add("is-walking");
       mascot.style.left = `${nextLeft}px`;
       mascot.style.top = `${nextTop}px`;
+      clearTimeout(mascotWalkTimer);
+      mascotWalkTimer = setTimeout(() => mascot.classList.remove("is-walking"), 2650);
       clearTimeout(mascotMoveTimer);
       mascotMoveTimer = setTimeout(moveMascot, 4500 + Math.random() * 4500);
     }
@@ -550,7 +556,8 @@
       mascotDragStartTop = mascotPosition.top;
       mascotWasDragged = false;
       mascotSpokeDuringDrag = false;
-      mascot.classList.add("is-dragging");
+      clearTimeout(mascotWalkTimer);
+      mascot.classList.add("is-dragging", "is-walking");
       mascot.style.bottom = "auto";
       mascot.style.top = `${mascotDragStartTop}px`;
       mascot.setPointerCapture(event.pointerId);
@@ -585,7 +592,7 @@
       if (!mascot.hasPointerCapture(event.pointerId)) return;
       mascot.releasePointerCapture(event.pointerId);
       cancelAnimationFrame(mascotScrollFrame);
-      mascot.classList.remove("is-dragging");
+      mascot.classList.remove("is-dragging", "is-walking");
       clearTimeout(mascotMoveTimer);
       mascotMoveTimer = setTimeout(moveMascot, 3500);
     }
