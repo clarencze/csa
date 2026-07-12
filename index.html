@@ -12,36 +12,7 @@
   <link rel="stylesheet" href="style.css">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['Space Grotesk', 'monospace'],
-          },
-          colors: {
-            // Light Mode
-            architecturalCream: '#EDEDE7',
-            deepObsidian: '#151718',
-
-            satinSlate: '#707578',
-
-            slateMuted: '#4F5A63',
-            slateStrong: '#2F363C',
-
-            luxuryEmerald: '#0A3C26',
-
-            // Dark Mode
-            brushedNickel: '#8E9396',
-            mintEmerald: '#00A86B',
-        }
-        }
-      }
-    }
-  </script>
+  <script src="tailwind-config.js"></script>
 
 </head>
 <body class="font-sans antialiased selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black overflow-x-hidden relative">
@@ -52,6 +23,37 @@
   <!-- Minimal Theme Transition Fade Overlay -->
   <div id="transition-overlay" class="fixed inset-0 z-50 overflow-hidden"></div>
 
+  <!-- Wandering Portfolio Mascot -->
+  <button id="mascot" type="button" aria-label="Talk to Byte, the portfolio mascot">
+    <span id="mascot-message" role="status" aria-live="polite"></span>
+    <span class="mascot-robot" aria-hidden="true">
+      <span class="mascot-antenna"></span>
+      <span class="mascot-head">
+        <span class="mascot-eyes"><i></i><i></i></span>
+        <span class="mascot-mouth"></span>
+      </span>
+      <span class="mascot-feet"><i></i><i></i></span>
+    </span>
+    <span class="mascot-name" aria-hidden="true">BYTE</span>
+  </button>
+
+  <button id="mascot-visibility" type="button" aria-pressed="false" class="fixed right-5 bottom-5 z-40 border border-neutral-300 dark:border-neutral-800 bg-architecturalCream/90 dark:bg-deepObsidian/90 px-3 py-2 font-mono text-[9px] uppercase tracking-widest text-neutral-500 backdrop-blur-md transition-colors hover:text-emerald-600 dark:hover:text-mintEmerald">
+    Hide Byte
+  </button>
+
+  <!-- Project Screenshot Lightbox -->
+  <dialog id="project-lightbox" aria-labelledby="lightbox-caption">
+    <div class="lightbox-shell">
+      <button id="lightbox-close" type="button" aria-label="Close image viewer">CLOSE ×</button>
+      <button id="lightbox-prev" class="lightbox-arrow lightbox-arrow-prev" type="button" aria-label="Previous project image">←</button>
+      <figure>
+        <img id="lightbox-image" alt="">
+        <figcaption id="lightbox-caption"></figcaption>
+      </figure>
+      <button id="lightbox-next" class="lightbox-arrow lightbox-arrow-next" type="button" aria-label="Next project image">→</button>
+    </div>
+  </dialog>
+
   <!-- 1. THE ISOLATED MODE CONTROLLER (Top-Right) -->
   <button id="theme-toggle" aria-label="Toggle Theme" class="fixed top-6 md:top-8 right-6 md:right-8 z-50 flex items-center space-x-3 group bg-architecturalCream/80 dark:bg-deepObsidian/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-800 px-4 py-2 rounded-none font-mono text-xs tracking-widest transition-all duration-300 hover:border-current">
     <span class="relative flex h-2 w-2">
@@ -61,15 +63,15 @@
   </button>
 
   <!-- MOBILE FLOATING MENU TRIGGER -->
-  <button id="mobile-menu-trigger" aria-label="Open Navigation" class="md:hidden fixed top-6 left-6 z-50 flex items-center justify-center bg-architecturalCream/80 dark:bg-deepObsidian/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-800 px-4 py-2 font-mono text-xs tracking-widest transition-all duration-300 hover:border-current">
+  <button id="mobile-menu-trigger" type="button" aria-label="Open navigation" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden fixed top-6 left-6 z-50 flex items-center justify-center bg-architecturalCream/80 dark:bg-deepObsidian/80 backdrop-blur-md border border-neutral-300 dark:border-neutral-800 px-4 py-2 font-mono text-xs tracking-widest transition-all duration-300 hover:border-current">
     MENU
   </button>
 
   <!-- MOBILE FULL SCREEN MENU OVERLAY -->
-  <div id="mobile-menu" class="fixed inset-0 bg-architecturalCream dark:bg-deepObsidian z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-8">
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" inert class="fixed inset-0 bg-architecturalCream dark:bg-deepObsidian z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-8">
     <div class="flex justify-between items-center">
       <span class="font-mono text-xs text-neutral-400">NAVIGATION</span>
-      <button id="mobile-menu-close" class="font-mono text-xs uppercase tracking-widest hover:text-emerald-500">CLOSE</button>
+      <button id="mobile-menu-close" type="button" class="font-mono text-xs uppercase tracking-widest hover:text-emerald-500">CLOSE</button>
     </div>
     <div class="flex flex-col space-y-8 my-auto">
   <a href="#about" class="mobile-nav-link text-3xl font-light font-mono uppercase tracking-wider text-neutral-700 hover:text-neutral-900 dark:hover:text-neutral-500">About</a>
@@ -86,29 +88,29 @@
   <!-- 2. THE VERTICAL SIDEBAR NAVIGATION (Left Side - Desktop Only) -->
   <nav class="hidden md:flex fixed left-0 top-0 h-screen w-16 md:w-20 z-40 border-r border-neutral-300 dark:border-neutral-800 bg-architecturalCream/85 dark:bg-deepObsidian/85 backdrop-blur-md flex flex-col justify-between items-center py-8">
     <!-- Top Brand Signifier -->
-    <div class="font-mono text-sm font-bold tracking-wider text-neutral-400 hover:text-current cursor-pointer transition-colors" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <a href="#hero" aria-label="Back to top" class="font-mono text-sm font-bold tracking-wider text-neutral-400 hover:text-current transition-colors">
       CA
-    </div>
+    </a>
 
     <!-- Center Navigation Rotated 90 Degrees -->
     <div class="flex flex-col space-y-12 my-auto items-center">
-      <a href="#about" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-1000 dark:text-neutral-200 hover:text-neutral-1000 dark:hover:text-neutral-200 transition-all duration-300 py-2 relative group">
+      <a href="#about" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-neutral-200 transition-all duration-300 py-2 relative group">
         ABOUT
         <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
       </a>
-      <a href="#skills" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+      <a href="#skills" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 transition-all duration-300 py-2 relative group">
         SKILLS
         <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
       </a>
-      <a href="#projects" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+      <a href="#projects" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 transition-all duration-300 py-2 relative group">
         PROJECTS
         <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
       </a>
-      <a href="#experience" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+      <a href="#experience" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 transition-all duration-300 py-2 relative group">
         EXPERIENCE
         <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
       </a>
-      <a href="#contact" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-1000 transition-all duration-300 py-2 relative group">
+      <a href="#contact" class="nav-link vertical-text font-mono text-xs uppercase tracking-[0.2em] font-light text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 transition-all duration-300 py-2 relative group">
         CONTACT
         <span class="absolute right-0 top-0 bottom-0 w-[2px] bg-transparent group-hover:bg-neutral-400 transition-colors"></span>
       </a>
@@ -124,49 +126,55 @@
   <main class="pl-0 md:pl-20 min-h-screen relative z-10">
 
     <!-- 3. SECTION 1: TITLE HERO LANDING -->
-    <section id="hero" class="min-h-screen flex flex-col justify-between p-6 sm:p-12 md:p-16 lg:p-24 relative overflow-hidden border-b border-neutral-200 dark:border-neutral-900">
+    <section id="hero" class="min-h-[100svh] flex flex-col justify-between px-5 py-6 sm:p-10 md:p-16 lg:p-20 xl:p-24 relative overflow-hidden border-b border-neutral-200 dark:border-neutral-900">
       
       <!-- Minimal Header Information -->
       <div class="flex justify-between items-start pt-16 md:pt-4">
-        <div class="font-mono text-[10px] sm:text-xs text-neutral-1200 dark:text-brushedNickel">
+        <div class="font-mono text-[10px] sm:text-xs text-neutral-950 dark:text-brushedNickel">
           <span>PORTFOLIO — 2026 EDITION</span>
         </div>
       </div>
 
       <!-- Core Structural Name & Description Block -->
-      <div class="my-auto py-12 md:py-0">
+      <div class="my-auto py-10 sm:py-12 md:py-8">
         <!-- Clean Layout Line Accent -->
         <div class="h-[1px] w-16 md:w-32 bg-neutral-400 dark:bg-neutral-800 mb-8"></div>
         
-        <h1 class="hero-name-roll text-4xl sm:text-6xl md:text-7xl lg:text-[9.5rem] font-light tracking-tight leading-none uppercase font-mono mb-6 md:mb-10" aria-label="Clarence Aquino">
+        <h1 class="hero-name-roll font-light tracking-tight leading-none uppercase font-mono mb-7 md:mb-10" aria-label="Clarence Aquino">
           <span class="hero-text-roll" aria-hidden="true">
             <span class="hero-text-line first">
-              <span style="transition-delay: 0.1225s">C</span><span style="transition-delay: 0.0875s">l</span><span style="transition-delay: 0.0525s">a</span><span style="transition-delay: 0.0175s">r</span><span style="transition-delay: 0.0175s">e</span><span style="transition-delay: 0.0525s">n</span><span style="transition-delay: 0.0875s">c</span><span style="transition-delay: 0.1225s">e</span>
+              <span>C</span><span>l</span><span>a</span><span>r</span><span>e</span><span>n</span><span>c</span><span>e</span>
             </span>
             <span class="hero-text-line second">
-              <span style="transition-delay: 0.1225s">C</span><span style="transition-delay: 0.0875s">l</span><span style="transition-delay: 0.0525s">a</span><span style="transition-delay: 0.0175s">r</span><span style="transition-delay: 0.0175s">e</span><span style="transition-delay: 0.0525s">n</span><span style="transition-delay: 0.0875s">c</span><span style="transition-delay: 0.1225s">e</span>
+              <span>C</span><span>l</span><span>a</span><span>r</span><span>e</span><span>n</span><span>c</span><span>e</span>
             </span>
           </span>
           <span class="hero-text-roll font-bold relative text-emerald-950 dark:text-neutral-100" aria-hidden="true">
             <span class="hero-text-line first">
-              <span style="transition-delay: 0.105s">A</span><span style="transition-delay: 0.07s">q</span><span style="transition-delay: 0.035s">u</span><span style="transition-delay: 0s">i</span><span style="transition-delay: 0.035s">n</span><span style="transition-delay: 0.07s">o</span><span class="text-emerald-500" style="transition-delay: 0.105s">.</span>
+              <span>A</span><span>q</span><span>u</span><span>i</span><span>n</span><span>o</span><span class="text-emerald-500">.</span>
             </span>
             <span class="hero-text-line second">
-              <span style="transition-delay: 0.105s">A</span><span style="transition-delay: 0.07s">q</span><span style="transition-delay: 0.035s">u</span><span style="transition-delay: 0s">i</span><span style="transition-delay: 0.035s">n</span><span style="transition-delay: 0.07s">o</span><span class="text-emerald-500" style="transition-delay: 0.105s">.</span>
+              <span>A</span><span>q</span><span>u</span><span>i</span><span>n</span><span>o</span><span class="text-emerald-500">.</span>
             </span>
           </span>
         </h1>
         
         <div class="max-w-4xl">
-          <p class="text-lg sm:text-xl md:text-3xl text-neutral-500 dark:text-brushedNickel font-light leading-relaxed font-sans">
+          <p class="text-base min-[380px]:text-lg sm:text-xl lg:text-2xl xl:text-3xl text-neutral-500 dark:text-brushedNickel font-light leading-relaxed font-sans">
             Developing web applications, software systems, and computational tools that blend functionality, performance, and usability. Passionate about transforming ideas into practical solutions through modern software engineering.
           </p>
+          <div class="mt-7 flex flex-wrap gap-3 font-mono text-xs">
+            <a href="Clarence_Aquino_Resume%20(1)%20-%20Copy.pdf" target="_blank" rel="noopener" class="project-link inline-flex items-center gap-3 border border-neutral-400 dark:border-neutral-700 px-5 py-3 text-neutral-800 dark:text-neutral-100 transition-colors hover:border-emerald-600 hover:text-emerald-600 dark:hover:border-mintEmerald dark:hover:text-mintEmerald">
+              <span>VIEW / DOWNLOAD RESUME</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- Footer navigation hints -->
       <div class="flex flex-col md:flex-row justify-between items-start md:items-end space-y-4 md:space-y-0 border-t border-neutral-300 dark:border-neutral-800 pt-8">
-        <div class="font-mono text-[10px] sm:text-xs text-neutral-1200 dark:text-neutral-700 flex flex-wrap gap-4 sm:gap-6 items-center">
+        <div class="font-mono text-[10px] sm:text-xs text-neutral-950 dark:text-neutral-400 flex flex-wrap gap-4 sm:gap-6 items-center">
           <span>SOFTWARE ENGINEERING</span>
           <span class="hidden sm:inline">•</span>
           <span>WEB APPLICATIONS</span>
@@ -183,7 +191,7 @@
     </section>
 
     <!-- 4. SECTION 2: ABOUT / PROFILE SYSTEM -->
-    <section id="about" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 flex flex-col justify-center">
+    <section id="about" class="min-h-screen py-20 sm:py-24 px-5 sm:px-10 md:px-12 lg:px-20 xl:px-24 border-b border-neutral-200 dark:border-neutral-900 flex flex-col justify-center">
       <div class="max-w-7xl mx-auto w-full">
         
         <!-- Section Header -->
@@ -227,21 +235,21 @@
                 <img
                   src="img/clarence.jpg"
                   alt="Clarence Aquino"
-                  class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-500"
+                  class="absolute inset-0 w-full h-full object-cover opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500"
                 >
 
                 <!-- Original Design -->
-                <div class="border border-dashed border-neutral-400 dark:border-neutral-800 p-8 rounded-full mb-4 transition-opacity duration-500 group-hover:opacity-0">
+                <div class="hidden md:block border border-dashed border-neutral-400 dark:border-neutral-800 p-8 rounded-full mb-4 transition-opacity duration-500 group-hover:opacity-0">
                   <svg class="w-16 h-16 text-neutral-600 dark:text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                   </svg>
                 </div>
 
-                <div class="font-sans text-xs text-neutral-600 dark:text-neutral-400 mt-2 px-6 font-medium transition-opacity duration-500 group-hover:opacity-0">
+                <div class="hidden md:block font-sans text-xs text-neutral-600 dark:text-neutral-400 mt-2 px-6 font-medium transition-opacity duration-500 group-hover:opacity-0">
                   Clarence Aquino
                 </div>
 
-                <div class="font-sans text-[11px] text-neutral-400 dark:text-neutral-500 mt-1 uppercase tracking-wider transition-opacity duration-500 group-hover:opacity-0">
+                <div class="hidden md:block font-sans text-[11px] text-neutral-400 dark:text-neutral-500 mt-1 uppercase tracking-wider transition-opacity duration-500 group-hover:opacity-0">
                   Computer Engineer
                 </div>
 
@@ -297,7 +305,7 @@
     </section>
 
     <!-- 5. SECTION 3: TECHNICAL SKILLS MATRIX -->
-    <section id="skills" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 bg-neutral-200/20 dark:bg-deepObsidian/20 relative">
+    <section id="skills" class="min-h-screen py-20 sm:py-24 px-5 sm:px-10 md:px-12 lg:px-20 xl:px-24 border-b border-neutral-200 dark:border-neutral-900 bg-neutral-200/20 dark:bg-deepObsidian/20 relative">
       <div class="max-w-7xl mx-auto w-full">
         
         <!-- Section Header -->
@@ -319,44 +327,44 @@
           <!-- Horizontal Segment Stack Layout -->
           <div class="space-y-12 md:space-y-16 divide-y divide-neutral-300 dark:divide-neutral-800">
             
-            <!-- Row 1: Programming -->
+            <!-- Row 1: Languages -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-0 items-center">
               <div class="lg:col-span-4">
                 <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Core languages</span>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Programming</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Languages</h3>
               </div>
               <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">HTML</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Python</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Java</span>
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">C++</span>
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">JavaScript</span>
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Python</span>
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">PHP</span>
               </div>
             </div>
 
-            <!-- Row 2: Embedded -->
+            <!-- Row 2: Web -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-12 md:pt-16 items-center">
               <div class="lg:col-span-4">
-                <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Hardware focus</span>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Embedded</h3>
+                <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Web technologies</span>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Web</h3>
               </div>
               <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Microcontrollers</span>
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">DSP</span>
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">IoT</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">HTML</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">CSS</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">React</span>
               </div>
             </div>
 
-            <!-- Row 3: Databases -->
+            <!-- Row 3: Databases and Backend -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-12 md:pt-16 items-center">
               <div class="lg:col-span-4">
                 <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Data layer</span>
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Databases</h3>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Databases &amp; Backend</h3>
               </div>
               <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">MySQL</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">SQLite</span>
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Firebase</span>
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Backend</span>
               </div>
             </div>
 
@@ -368,11 +376,20 @@
               </div>
               <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Git</span>
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">VS Code</span>
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">VSCode</span>
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">GitHub</span>
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">CLI</span>
-                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Arduino IDE</span>
                 <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">XAMPP</span>
+              </div>
+            </div>
+
+            <!-- Row 5: Embedded and Hardware -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 pt-12 md:pt-16 items-center">
+              <div class="lg:col-span-4">
+                <span class="font-mono text-[10px] tracking-widest text-neutral-400 uppercase block mb-1">Hardware development</span>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold uppercase font-mono text-neutral-800 dark:text-neutral-200">Embedded &amp; Hardware</h3>
+              </div>
+              <div class="lg:col-span-8 flex flex-wrap gap-3 sm:gap-4">
+                <span class="px-5 py-3 sm:px-6 sm:py-3.5 bg-neutral-300/20 dark:bg-neutral-800/50 border border-neutral-300 dark:border-neutral-800 font-mono text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 hover:border-emerald-600 dark:hover:border-mintEmerald transition-colors duration-300">Arduino</span>
               </div>
             </div>
 
@@ -384,18 +401,18 @@
     </section>
 
     <!-- 6. SECTION 4: FEATURED PROJECTS CAROUSEL -->
-    <section id="projects" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 flex flex-col justify-center">
+    <section id="projects" class="min-h-screen py-20 sm:py-24 px-5 sm:px-10 md:px-12 lg:px-20 xl:px-24 border-b border-neutral-200 dark:border-neutral-900 flex flex-col justify-center">
       <div class="max-w-7xl mx-auto w-full">
         
         <!-- Section Header -->
-        <div class="flex items-center space-x-4 mb-16 md:mb-20">
+        <div class="flex items-center space-x-4 mb-10 sm:mb-14 md:mb-20">
           <h2 class="text-xl sm:text-2xl md:text-3xl font-mono uppercase tracking-widest text-neutral-500 dark:text-brushedNickel">Featured Projects</h2>
           <div class="flex-grow h-[1px] bg-neutral-300 dark:bg-neutral-800"></div>
           <div class="w-2 h-2 rounded-full border border-neutral-400 dark:border-neutral-700"></div>
         </div>
 
         <!-- Carousel Frame Viewport -->
-        <div class="relative overflow-hidden border border-neutral-300 dark:border-neutral-800 bg-architecturalCream dark:bg-[#191b1c] p-6 md:p-12 transition-all duration-500">
+        <div class="project-frame relative overflow-hidden border border-neutral-300 dark:border-neutral-800 bg-architecturalCream dark:bg-[#191b1c] p-4 min-[380px]:p-5 sm:p-8 lg:p-10 xl:p-12 transition-all duration-500" tabindex="0" aria-label="Featured projects carousel. Use the left and right arrow keys to change projects.">
           
           <div class="absolute top-0 bottom-0 left-[41.6%] w-[1px] bg-neutral-200 dark:bg-neutral-800/60 pointer-events-none hidden lg:block"></div>
           
@@ -403,16 +420,17 @@
           <div class="relative min-h-[450px] flex flex-col justify-between">
             
             <!-- Active Slide Content Holder -->
-            <div id="carousel-slide-content" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+            <div id="carousel-slide-content" aria-live="polite" class="project-slide grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
               
               <!-- Left Detail Column (lg:col-span-5 for text details) -->
               <div class="lg:col-span-5 space-y-6 flex flex-col justify-between">
                 <div class="space-y-6">
-                  <div class="flex items-center space-x-3">
+                  <div class="flex items-center justify-between gap-3">
                     <span id="proj-index" class="font-mono text-xs text-emerald-600 dark:text-mintEmerald tracking-widest">01 / 03</span>
+                    <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-neutral-400">Selected work</span>
                   </div>
                   
-                  <h3 id="proj-title" class="text-2xl sm:text-3xl md:text-4xl font-mono uppercase font-bold tracking-tight text-neutral-800 dark:text-neutral-100 transition-all duration-300">
+                  <h3 id="proj-title" class="text-2xl min-[380px]:text-3xl md:text-4xl font-mono uppercase font-bold tracking-tight text-neutral-800 dark:text-neutral-100 transition-all duration-300">
                     Custom RISC-V Soft Core FPGA
                   </h3>
                   
@@ -421,12 +439,12 @@
                   </p>
 
                   <!-- Direct Project Deployment Links -->
-                  <div class="flex flex-wrap gap-4 pt-2 font-mono text-xs">
-                    <a id="proj-github" href="#" target="_blank" class="inline-flex items-center space-x-1.5 text-neutral-800 dark:text-neutral-200 hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors border border-neutral-300 dark:border-neutral-800 px-3 py-1.5 bg-neutral-100/30 dark:bg-neutral-900/30">
+                  <div class="flex flex-col min-[420px]:flex-row flex-wrap gap-3 pt-2 font-mono text-xs">
+                    <a id="proj-github" href="#" target="_blank" rel="noopener noreferrer" class="project-link inline-flex justify-between min-[420px]:justify-start items-center gap-3 text-neutral-800 dark:text-neutral-200 hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors border border-neutral-300 dark:border-neutral-800 px-4 py-3 bg-neutral-100/30 dark:bg-neutral-900/30">
                       <span>GITHUB REPO</span>
                       <span class="text-[10px]">↗</span>
                     </a>
-                    <a id="proj-live" href="#" target="_blank" class="inline-flex items-center space-x-1.5 text-neutral-800 dark:text-neutral-200 hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors border border-neutral-300 dark:border-neutral-800 px-3 py-1.5 bg-neutral-100/30 dark:bg-neutral-900/30">
+                    <a id="proj-live" href="#" target="_blank" rel="noopener noreferrer" class="project-link inline-flex justify-between min-[420px]:justify-start items-center gap-3 text-neutral-800 dark:text-neutral-200 hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors border border-neutral-300 dark:border-neutral-800 px-4 py-3 bg-neutral-100/30 dark:bg-neutral-900/30">
                       <span>LIVE WEBSITE</span>
                       <span class="text-[10px]">↗</span>
                     </a>
@@ -434,7 +452,7 @@
                 </div>
 
                 <!-- Project Specs Table -->
-                <div class="border-t border-neutral-300 dark:border-neutral-800 pt-6 grid grid-cols-3 gap-4 font-mono text-xs">
+                <div class="border-t border-neutral-300 dark:border-neutral-800 pt-6 grid grid-cols-1 min-[430px]:grid-cols-3 gap-4 font-mono text-xs">
                   <div>
                     <div class="text-neutral-400 uppercase">Tech</div>
                     <div id="proj-lang" class="flex flex-wrap gap-2 font-bold text-neutral-800 dark:text-neutral-200 mt-1"></div>
@@ -452,7 +470,7 @@
 
               <!-- Right Visual/Schematic Media Gallery (lg:col-span-7 to expand area) -->
               <div class="lg:col-span-7 flex flex-col justify-center">
-                <div class="w-full aspect-[16/10] border border-dashed border-neutral-400 dark:border-neutral-800 relative flex flex-col justify-between bg-neutral-200/40 dark:bg-neutral-900/40 overflow-hidden group/gallery">
+                <div class="w-full aspect-[4/3] sm:aspect-[16/10] border border-dashed border-neutral-400 dark:border-neutral-800 relative flex flex-col justify-between bg-neutral-200/40 dark:bg-neutral-900/40 overflow-hidden group/gallery touch-pan-y">
                   
                   <!-- Corner Solder Node Accents -->
                   <div class="absolute -top-1 -left-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full z-20"></div>
@@ -461,15 +479,19 @@
                   <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-neutral-400 dark:bg-neutral-700 rounded-full z-20"></div>
 
                   <!-- Image / Schematic Viewport Layer -->
-                  <div id="media-viewport" class="flex-grow w-full h-full flex items-center justify-center relative select-none">
-                    <img id="gallery-img" src="img/dsp.png" alt="Project Presentation" class="w-full h-full object-cover transition-opacity duration-300" onerror="handleImageFallback()" />
-                    <div id="gallery-svg-container" class="absolute inset-0 flex items-center justify-center text-emerald-700 dark:text-mintEmerald opacity-85 hidden">
-                      <!-- Fallback vector markup goes here dynamically if image load fails -->
+                  <div id="media-viewport" class="flex-grow w-full h-full flex items-center justify-center relative select-none cursor-zoom-in" aria-label="Open project screenshot viewer">
+                    <img id="gallery-img" src="img/dsp.png" alt="Digital Signal Processing Simulator" class="w-full h-full object-cover transition-opacity duration-300" />
+                    <div id="gallery-loading" class="gallery-loading absolute inset-0" aria-hidden="true">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div id="gallery-fallback" class="absolute inset-0 hidden flex-col items-center justify-center gap-4 p-8 text-center font-mono text-xs text-neutral-500 dark:text-neutral-400">
+                      <span id="gallery-fallback-text">Project image unavailable</span>
+                      <button id="gallery-retry" type="button" class="border border-neutral-400 px-3 py-2 uppercase tracking-wider hover:text-emerald-600">Retry image</button>
                     </div>
                   </div>
 
                   <!-- Micro Floating Gallery Navigation Buttons inside Visual frame -->
-                  <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none opacity-0 group-hover/gallery:opacity-100 transition-opacity duration-300 z-30">
+                  <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 sm:px-4 pointer-events-none opacity-100 md:opacity-0 md:group-hover/gallery:opacity-100 transition-opacity duration-300 z-30">
                     <button id="gallery-prev" aria-label="Previous image" class="pointer-events-auto w-10 h-10 rounded-full bg-architecturalCream/95 dark:bg-deepObsidian/95 border border-neutral-300 dark:border-neutral-800 flex items-center justify-center text-neutral-800 dark:text-neutral-200 hover:border-emerald-600 dark:hover:border-mintEmerald hover:text-emerald-600 dark:hover:text-mintEmerald transition-all duration-200 font-mono text-sm shadow-md">
                       ←
                     </button>
@@ -489,19 +511,22 @@
             </div>
 
             <!-- Carousel Controls and Pagination -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-between items-center border-t border-neutral-300 dark:border-neutral-800 pt-8 mt-12">
-              <div class="font-mono text-[10px] sm:text-xs text-neutral-400 dark:text-neutral-500">
-                PORTFOLIO PROJECT PORTAL
+            <div class="flex flex-col md:flex-row gap-5 justify-between items-center border-t border-neutral-300 dark:border-neutral-800 pt-6 sm:pt-8 mt-8 sm:mt-12">
+              <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-5">
+                <div class="font-mono text-[10px] sm:text-xs text-neutral-400 dark:text-neutral-500">
+                  SWIPE OR SELECT A PROJECT
+                </div>
+                <div id="project-pagination" class="flex items-center gap-2" aria-label="Choose a project"></div>
               </div>
-              <div class="flex items-center space-x-6">
+              <div class="flex items-center justify-center space-x-2 min-[380px]:space-x-6 w-full md:w-auto">
                 <!-- Left Nav Arrow Button -->
-                <button id="carousel-prev" aria-label="Previous Project" class="group flex items-center space-x-2 font-mono text-xs text-neutral-500 dark:text-brushedNickel hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors duration-200 py-2 px-3">
+                <button id="carousel-prev" aria-label="Previous Project" class="group flex flex-1 md:flex-none justify-center items-center space-x-2 font-mono text-xs text-neutral-500 dark:text-brushedNickel hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors duration-200 py-3 px-3">
                   <span class="group-hover:-translate-x-1.5 transition-transform duration-300">←</span>
                   <span>PREVIOUS</span>
                 </button>
                 <span class="text-neutral-300 dark:text-neutral-800">/</span>
                 <!-- Right Nav Arrow Button -->
-                <button id="carousel-next" aria-label="Next Project" class="group flex items-center space-x-2 font-mono text-xs text-neutral-500 dark:text-brushedNickel hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors duration-200 py-2 px-3">
+                <button id="carousel-next" aria-label="Next Project" class="group flex flex-1 md:flex-none justify-center items-center space-x-2 font-mono text-xs text-neutral-500 dark:text-brushedNickel hover:text-emerald-500 dark:hover:text-mintEmerald transition-colors duration-200 py-3 px-3">
                   <span>NEXT</span>
                   <span class="group-hover:translate-x-1.5 transition-transform duration-300">→</span>
                 </button>
@@ -516,7 +541,7 @@
     </section>
 
     <!-- 7. SECTION 5: PROFESSIONAL EXPERIENCE -->
-    <section id="experience" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-200 dark:border-neutral-900 bg-neutral-200/20 dark:bg-deepObsidian/20">
+    <section id="experience" class="min-h-screen py-20 sm:py-24 px-5 sm:px-10 md:px-12 lg:px-20 xl:px-24 border-b border-neutral-200 dark:border-neutral-900 bg-neutral-200/20 dark:bg-deepObsidian/20">
       <div class="max-w-7xl mx-auto w-full">
         
         <!-- Section Header -->
@@ -546,7 +571,6 @@
                 <h4 class="text-xl font-medium text-neutral-800 dark:text-neutral-200">Computer Engineering Student – Software & IoT Development</h4>
                 <p class="text-neutral-500 dark:text-brushedNickel font-light">
                   Developing web applications and IoT systems using Python and Django. Focused on building RESTful APIs, backend services, and connected devices that communicate through networked systems. Projects integrate software development with IoT hardware concepts to create real-time data-driven applications.</p>
-                </p>
                 <div class="flex flex-wrap gap-2 pt-2">
                   <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">Python</span>
                   <span class="px-2.5 py-1 bg-neutral-300/50 dark:bg-neutral-800 font-mono text-[10px] text-neutral-600 dark:text-neutral-400">Django</span>
@@ -589,7 +613,7 @@
     </section>
 
     <!-- 8. SECTION 6: CONTACT CHANNEL -->
-    <section id="contact" class="min-h-screen py-24 px-6 sm:px-12 md:px-16 lg:px-24 flex flex-col justify-between">
+    <section id="contact" class="min-h-screen py-20 sm:py-24 px-5 sm:px-10 md:px-12 lg:px-20 xl:px-24 flex flex-col justify-between">
       <div class="max-w-7xl mx-auto w-full my-auto">
         
         <!-- Section Header -->
@@ -628,6 +652,7 @@
             <span class="text-neutral-400 group-hover:text-emerald-500 transition-colors duration-300">GITHUB:</span>
             <a href="https://github.com/clarencze"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="text-neutral-800 dark:text-neutral-200 font-medium break-all
                         transition-all duration-300 group-hover:text-emerald-500 group-hover:translate-x-1">
                 View GitHub
@@ -639,6 +664,7 @@
             <span class="text-neutral-400 group-hover:text-emerald-500 transition-colors duration-300">LINKEDIN:</span>
             <a href="https://www.linkedin.com/in/clarence-aquino-3b7141417/"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="text-neutral-800 dark:text-neutral-200 font-medium break-all
                         transition-all duration-300 group-hover:text-emerald-500 group-hover:translate-x-1">
                 Connect on LinkedIn
@@ -667,7 +693,7 @@
                 class="block mb-2 text-[10px] text-neutral-400 uppercase tracking-wider transition-colors duration-300 group-focus-within:text-emerald-600 dark:group-focus-within:text-mintEmerald">
                 YOUR NAME
                 </label>
-                <input type="text" id="form-name" required placeholder=" "
+                <input type="text" id="form-name" name="name" autocomplete="name" required placeholder=" "
                 class="w-full bg-transparent border-b border-neutral-300 py-3 text-neutral-800 dark:text-neutral-100 focus:outline-none focus:border-emerald-600 dark:focus:border-mintEmerald transition-all duration-300" />
             </div>
 
@@ -677,7 +703,7 @@
                 class="block mb-2 text-[10px] text-neutral-400 uppercase tracking-wider transition-colors duration-300 group-focus-within:text-emerald-600 dark:group-focus-within:text-mintEmerald">
                 YOUR EMAIL
                 </label>
-                <input type="email" id="form-email" required placeholder=" "
+                <input type="email" id="form-email" name="email" autocomplete="email" required placeholder=" "
                 class="w-full bg-transparent border-b border-neutral-300 py-3 text-neutral-800 dark:text-neutral-100 focus:outline-none focus:border-emerald-600 dark:focus:border-mintEmerald transition-all duration-300" />
             </div>
             </div>
@@ -688,7 +714,7 @@
                 class="block mb-2 text-[10px] text-neutral-400 uppercase tracking-wider transition-colors duration-300 group-focus-within:text-emerald-600 dark:group-focus-within:text-mintEmerald">
                 YOUR MESSAGE
             </label>
-            <textarea id="form-message" required rows="4" placeholder=" "
+            <textarea id="form-message" name="message" required rows="4" placeholder=" "
                 class="w-full bg-transparent border-b border-neutral-300 dark:border-neutral-800 py-3 text-neutral-800 dark:text-neutral-100 focus:outline-none focus:border-emerald-600 dark:focus:border-mintEmerald transition-all duration-300 resize-none"></textarea>
             </div>
 
@@ -700,7 +726,7 @@
             </button>
 
             <!-- Success Notification -->
-            <div id="form-status"
+            <div id="form-status" role="status" aria-live="polite"
             class="hidden p-4 border border-dashed border-emerald-500 text-emerald-600 font-mono text-xs uppercase tracking-wide">
             Message sent successfully. I will be in touch shortly.
             </div>
