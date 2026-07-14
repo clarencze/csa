@@ -90,12 +90,14 @@
     }
 
     .hero-text-roll:hover .hero-text-line.first span,
-    .hero-text-roll:focus-within .hero-text-line.first span {
+    .hero-text-roll:focus-within .hero-text-line.first span,
+    .hero-name-roll.is-mascot-triggered .hero-text-line.first span {
       transform: translateY(-100%);
     }
 
     .hero-text-roll:hover .hero-text-line.second span,
-    .hero-text-roll:focus-within .hero-text-line.second span {
+    .hero-text-roll:focus-within .hero-text-line.second span,
+    .hero-name-roll.is-mascot-triggered .hero-text-line.second span {
       transform: translateY(0);
     }
 

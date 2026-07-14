@@ -408,8 +408,10 @@
        WANDERING PORTFOLIO MASCOT
        ---------------------------------------------------- */
     const mascot = document.getElementById("mascot");
+    const mascotRobot = mascot.querySelector(".mascot-robot");
     const mascotMessage = document.getElementById("mascot-message");
     const mascotVisibilityButton = document.getElementById("mascot-visibility");
+    const heroName = document.querySelector(".hero-name-roll");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mascotMessages = [
       "Hi. I'm Byte. I supervise the bugs.",
@@ -446,8 +448,37 @@
     let mascotSpokeDuringDrag = false;
     let mascotPointerY = 0;
     let mascotScrollFrame;
+    let mascotCollisionFrame;
     let currentMascotSection = "hero";
     let mascotSectionTimer;
+
+    function updateMascotNameCollision() {
+      if (mascot.hidden || !heroName || !mascotRobot) {
+        heroName?.classList.remove("is-mascot-triggered");
+        return;
+      }
+
+      const botRect = mascotRobot.getBoundingClientRect();
+      const nameRect = heroName.getBoundingClientRect();
+      const overlapsName = botRect.left < nameRect.right
+        && botRect.right > nameRect.left
+        && botRect.top < nameRect.bottom
+        && botRect.bottom > nameRect.top;
+
+      heroName.classList.toggle("is-mascot-triggered", overlapsName);
+    }
+
+    function watchMascotNameCollision(duration = 2800) {
+      cancelAnimationFrame(mascotCollisionFrame);
+      const stopAt = performance.now() + duration;
+
+      function checkCollision(now) {
+        updateMascotNameCollision();
+        if (now < stopAt) mascotCollisionFrame = requestAnimationFrame(checkCollision);
+      }
+
+      mascotCollisionFrame = requestAnimationFrame(checkCollision);
+    }
 
     function showMascotMessage(message, duration = 2600, excited = false) {
       mascotMessage.textContent = message;
@@ -482,6 +513,8 @@
         clearTimeout(mascotWalkTimer);
         mascot.classList.remove("is-walking");
         cancelAnimationFrame(mascotScrollFrame);
+        cancelAnimationFrame(mascotCollisionFrame);
+        updateMascotNameCollision();
       } else if (announce) {
         clearTimeout(mascotMoveTimer);
         mascotMoveTimer = setTimeout(moveMascot, 500);
@@ -519,6 +552,7 @@
       mascot.classList.add("is-walking");
       mascot.style.left = `${nextLeft}px`;
       mascot.style.top = `${nextTop}px`;
+      watchMascotNameCollision();
       clearTimeout(mascotWalkTimer);
       mascotWalkTimer = setTimeout(() => mascot.classList.remove("is-walking"), 2650);
       clearTimeout(mascotMoveTimer);
@@ -542,6 +576,7 @@
       }
 
       if (scrollSpeed !== 0) window.scrollBy(0, scrollSpeed);
+      updateMascotNameCollision();
       mascotScrollFrame = requestAnimationFrame(autoScrollWhileDragging);
     }
 
@@ -586,6 +621,7 @@
       updateMascotEdgeState(nextLeft, nextTop);
       mascot.style.left = `${nextLeft}px`;
       mascot.style.top = `${nextTop}px`;
+      updateMascotNameCollision();
     });
 
     function finishMascotDrag(event) {
@@ -607,7 +643,11 @@
       }
       makeMascotTalk();
     });
-    window.addEventListener("resize", moveMascot);
+    window.addEventListener("scroll", updateMascotNameCollision, { passive: true });
+    window.addEventListener("resize", () => {
+      moveMascot();
+      updateMascotNameCollision();
+    });
     document.addEventListener("visibilitychange", () => {
       clearTimeout(mascotMoveTimer);
       if (!document.hidden) moveMascot();
