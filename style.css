@@ -143,40 +143,28 @@
                   height 1400ms cubic-bezier(.72, 0, .2, 1);
     }
 
-    #theme-byte-scene {
-      position: absolute;
-      z-index: 2;
-      left: 50%;
-      top: 50%;
-      width: 8rem;
-      height: 8rem;
+    #mascot.is-theme-guide {
+      z-index: 102;
       color: #f4f4f0;
-      opacity: 0;
-      transform: translate(-50%, 75vh) scale(.86);
-      transition: transform 560ms cubic-bezier(.16, 1, .3, 1), opacity 180ms ease;
+      pointer-events: none;
+      transition: left 600ms cubic-bezier(.16, 1, .3, 1),
+                  top 600ms cubic-bezier(.16, 1, .3, 1),
+                  transform 180ms ease;
     }
 
-    #transition-overlay.byte-entered #theme-byte-scene {
-      opacity: 1;
-      transform: translate(-50%, -45%) scale(1.22);
-    }
-
-    #theme-byte-copy {
-      position: absolute;
-      left: 1.7rem;
-      top: 1.5rem;
-      display: block;
-    }
-
-    #theme-byte-copy .mascot-robot {
-      animation: theme-byte-arrive 560ms cubic-bezier(.16, 1, .3, 1) both;
+    #mascot.is-theme-guide .mascot-robot {
       filter: drop-shadow(0 .4rem .25rem rgb(0 0 0 / .5));
+    }
+
+    #mascot.is-theme-guide.is-walking .mascot-robot {
+      animation: theme-byte-walk 380ms ease-in-out infinite alternate;
     }
 
     .theme-torch {
       position: absolute;
-      left: 5.15rem;
-      top: 2.25rem;
+      z-index: 3;
+      left: 3.85rem;
+      top: .55rem;
       width: 1.4rem;
       height: 3.8rem;
       opacity: 0;
@@ -185,7 +173,7 @@
       transition: opacity 140ms ease, transform 260ms cubic-bezier(.2, .8, .2, 1);
     }
 
-    #transition-overlay.torch-lit .theme-torch {
+    #mascot.has-theme-torch .theme-torch {
       opacity: 1;
       transform: rotate(8deg) translateY(0);
     }
@@ -230,37 +218,15 @@
       transform: translateX(-50%) scale(.2);
     }
 
-    #transition-overlay.torch-lit .theme-torch-flame {
+    #mascot.has-theme-torch .theme-torch-flame {
       opacity: 1;
       transform: translateX(-50%) scale(1);
       animation: torch-flicker 170ms ease-in-out infinite alternate;
     }
 
-    .theme-byte-caption {
-      position: absolute;
-      left: 50%;
-      top: 7.4rem;
-      width: max-content;
-      color: #8d9695;
-      font: 500 .46rem/1.4 monospace;
-      letter-spacing: .2em;
-      opacity: 0;
-      transform: translateX(-50%) translateY(.4rem);
-      transition: opacity 240ms ease 180ms, transform 240ms ease 180ms;
-    }
-
-    #transition-overlay.byte-entered .theme-byte-caption {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    #transition-overlay.torch-lit .theme-byte-caption {
-      color: #f4b84c;
-    }
-
-    #transition-overlay.is-revealing #theme-byte-scene {
-      opacity: 0;
-      transition: opacity 420ms ease 620ms;
+    #mascot.is-theme-guide.has-theme-torch .mascot-arm-right {
+      animation: none;
+      transform: rotate(-58deg) translate(.12rem, -.18rem);
     }
 
     @keyframes torch-flicker {
@@ -268,10 +234,9 @@
       to { transform: translateX(-50%) scale(1.08) rotate(2deg); filter: brightness(1.12); }
     }
 
-    @keyframes theme-byte-arrive {
-      0% { transform: translateY(1rem) rotate(-5deg); }
-      70% { transform: translateY(-.2rem) rotate(2deg); }
-      100% { transform: translateY(0) rotate(0); }
+    @keyframes theme-byte-walk {
+      from { transform: translateY(0) rotate(-1deg); }
+      to { transform: translateY(-.28rem) rotate(1deg); }
     }
 
     .project-frame {

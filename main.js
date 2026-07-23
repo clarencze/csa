@@ -139,6 +139,7 @@
       button.type = "button";
       button.className = "project-dot";
       button.setAttribute("aria-label", `Show project ${index + 1}: ${project.title}`);
+      button.dataset.byteProjectIndex = String(index);
       button.addEventListener("click", () => goToProject(index));
       projectPaginationEl.append(button);
     });
@@ -175,6 +176,7 @@
           const badge = document.createElement("span");
           badge.className = "px-3 py-1 rounded-full border border-neutral-300 dark:border-neutral-700 text-xs sm:text-sm";
           badge.textContent = language;
+          badge.dataset.byteTech = language;
           projLangEl.append(badge);
         });
         projInterfaceEl.textContent = proj.interface;
@@ -451,6 +453,7 @@
     let mascotCollisionFrame;
     let currentMascotSection = "hero";
     let mascotSectionTimer;
+    let mascotThemeSequenceActive = false;
 
     function updateMascotNameCollision() {
       if (mascot.hidden || !heroName || !mascotRobot) {
@@ -529,7 +532,7 @@
       const visibleSection = entries.find((entry) => entry.isIntersecting);
       if (!visibleSection || visibleSection.target.id === currentMascotSection) return;
       currentMascotSection = visibleSection.target.id;
-      if (mascot.hidden || !mascotSectionMessages[currentMascotSection]) return;
+      if (mascot.hidden || mascotThemeSequenceActive || !mascotSectionMessages[currentMascotSection]) return;
       clearTimeout(mascotSectionTimer);
       mascotSectionTimer = setTimeout(() => {
         showMascotMessage(mascotSectionMessages[currentMascotSection], 2800);
@@ -539,7 +542,7 @@
     document.querySelectorAll("main > section").forEach((section) => mascotSectionObserver.observe(section));
 
     function moveMascot() {
-      if (mascot.hidden || reducedMotion.matches || document.hidden) return;
+      if (mascot.hidden || mascotThemeSequenceActive || reducedMotion.matches || document.hidden) return;
       const edgePadding = 20;
       const maximumLeft = Math.max(edgePadding, window.innerWidth - mascot.offsetWidth - edgePadding);
       const maximumTop = Math.max(edgePadding, window.innerHeight - mascot.offsetHeight - edgePadding);
@@ -581,7 +584,7 @@
     }
 
     mascot.addEventListener("pointerdown", (event) => {
-      if (event.button !== 0) return;
+      if (event.button !== 0 || mascotThemeSequenceActive) return;
       clearTimeout(mascotMoveTimer);
       mascotDragStartX = event.clientX;
       mascotDragStartY = event.clientY;
@@ -654,6 +657,158 @@
     });
     if (!mascot.hidden) setTimeout(moveMascot, 1600);
 
+    /* ----------------------------------------------------
+       BYTE'S CONTEXTUAL PAGE REACTIONS
+       ---------------------------------------------------- */
+    const projectMascotMessages = [
+      "The DSP simulator turns noisy signals into something humans can read. FFTs included.",
+      "ESP32-CAM, sensors, and YOLO—this one watches the room and reports back.",
+      "CPU schedulers competing for attention. Round Robin keeps the peace around here.",
+      "Gaussian elimination without filling a notebook with crossed-out matrices. Efficient.",
+    ];
+
+    const technologyMascotMessages = {
+      Python: "Python: excellent for making complicated ideas look suspiciously simple.",
+      Java: "Java brings structure, portability, and a respectable amount of boilerplate.",
+      "C++": "C++: fast, powerful, and always one pointer away from an adventure.",
+      JavaScript: "JavaScript makes this page interactive—including me. You're welcome.",
+      PHP: "PHP still runs a huge part of the web. Quietly dependable.",
+      HTML: "HTML is the skeleton. Every interface needs good bones.",
+      CSS: "CSS is why I look like a robot instead of a pile of rectangles.",
+      React: "React is useful when the interface has lots of reusable, changing parts.",
+      "Vue.js": "Vue keeps reactive interfaces approachable and pleasantly organized.",
+      Django: "Django handles the serious backend work while Python keeps it readable.",
+      "REST API": "REST APIs let the frontend and backend exchange neatly labeled packages.",
+      MySQL: "MySQL: dependable relational storage for structured application data.",
+      PostgreSQL: "PostgreSQL is the database you call when the queries start getting ambitious.",
+      SQLite: "SQLite fits an entire database into one file. Tiny, but capable.",
+      Firebase: "Firebase is handy when an app needs realtime data without a large backend.",
+      Git: "Git remembers every coding decision—even the ones we would rather forget.",
+      GitHub: "GitHub is where the code lives when it leaves Clarence's machine.",
+      "VS Code": "VS Code: Clarence's workshop. I mostly supervise from the corner.",
+      Docker: "Docker puts the app and its dependencies into the same predictable box.",
+      XAMPP: "XAMPP makes local PHP development quick to spin up and test.",
+      Arduino: "Arduino is where software starts moving real hardware.",
+      ESP32: "ESP32 brings Wi-Fi, Bluetooth, and embedded control onto one tiny board.",
+      PyQt6: "PyQt6 gives Python projects a proper desktop interface.",
+      NumPy: "NumPy does the heavy numerical lifting behind all those signal calculations.",
+      YoloV8: "YOLOv8 spots objects in real time. I have asked it to recognize bugs.",
+    };
+
+    function setByteReaction(element, message) {
+      if (element) element.dataset.byteReaction = message;
+    }
+
+    projectFrameEl.dataset.byteCurrentProject = "true";
+    setByteReaction(mediaViewportEl, "Open the screenshot—Byte recommends inspecting the evidence.");
+    setByteReaction(projGithubEl, "The repository has the blueprints. Mind the commit history.");
+    setByteReaction(projLiveEl, "This one is live. Go press the buttons; that's what they're for.");
+
+    document.querySelectorAll("#skills span").forEach((badge) => {
+      const technology = badge.textContent.trim();
+      if (technologyMascotMessages[technology]) badge.dataset.byteTech = technology;
+    });
+
+    const experienceEntries = document.querySelectorAll("#experience .relative.pl-6 > .relative");
+    setByteReaction(experienceEntries[0], "At Dakila Soft, Clarence connects Django services to real IoT hardware.");
+    setByteReaction(experienceEntries[1], "Computer Engineering: half software, half hardware, entirely debugging.");
+
+    setByteReaction(
+      document.querySelector('#contact a[href^="mailto:"]'),
+      "Email is the fastest route to the human. I monitor morale, not the inbox."
+    );
+    setByteReaction(
+      document.querySelector('#contact a[href*="github.com"]'),
+      "More code lives over there. Some repositories may contain wild TODO comments."
+    );
+    setByteReaction(
+      document.querySelector('#contact a[href*="linkedin.com"]'),
+      "LinkedIn: the professional habitat of engineers and recruiters."
+    );
+    setByteReaction(
+      document.querySelector('a[href*="Clarence_Aquino_Resume"]'),
+      "The résumé is the compact version. This website has better animations."
+    );
+
+    let activeByteReactionTarget = null;
+    let mascotReactionResumeTimer;
+
+    function findByteReactionTarget(startNode) {
+      let node = startNode instanceof Element ? startNode : startNode?.parentElement;
+      while (node && node !== document.body) {
+        if (node.dataset?.byteTech
+          || node.dataset?.byteProjectIndex
+          || node.dataset?.byteReaction
+          || node.dataset?.byteCurrentProject) {
+          return node;
+        }
+        node = node.parentElement;
+      }
+      return null;
+    }
+
+    function getByteReaction(target) {
+      if (target.dataset.byteTech) {
+        const technology = target.dataset.byteTech;
+        return technologyMascotMessages[technology]
+          || `${technology} is part of the toolkit. Clarence can explain the serious details.`;
+      }
+
+      if (target.dataset.byteProjectIndex) {
+        return projectMascotMessages[Number(target.dataset.byteProjectIndex)];
+      }
+
+      if (target.dataset.byteCurrentProject) {
+        return projectMascotMessages[currentProjectIndex];
+      }
+
+      return target.dataset.byteReaction;
+    }
+
+    function reactToPageElement(target) {
+      if (!target || target === activeByteReactionTarget || mascot.hidden || mascotThemeSequenceActive) return;
+      const reaction = getByteReaction(target);
+      if (!reaction) return;
+
+      activeByteReactionTarget = target;
+      clearTimeout(mascotMoveTimer);
+      clearTimeout(mascotWalkTimer);
+      clearTimeout(mascotReactionResumeTimer);
+      mascot.classList.remove("is-walking");
+
+      const targetRect = target.getBoundingClientRect();
+      const mascotRect = mascot.getBoundingClientRect();
+      mascot.classList.toggle(
+        "is-facing-left",
+        targetRect.left + targetRect.width / 2 < mascotRect.left + mascotRect.width / 2
+      );
+      showMascotMessage(reaction, 3000, true);
+
+      mascotReactionResumeTimer = setTimeout(() => {
+        activeByteReactionTarget = null;
+        if (!mascot.hidden && !mascotThemeSequenceActive) moveMascot();
+      }, 3400);
+    }
+
+    function stopReactingToPageElement(nextNode) {
+      const nextTarget = findByteReactionTarget(nextNode);
+      if (nextTarget === activeByteReactionTarget) return;
+      activeByteReactionTarget = null;
+    }
+
+    document.addEventListener("pointerover", (event) => {
+      reactToPageElement(findByteReactionTarget(event.target));
+    });
+    document.addEventListener("pointerout", (event) => {
+      stopReactingToPageElement(event.relatedTarget);
+    });
+    document.addEventListener("focusin", (event) => {
+      reactToPageElement(findByteReactionTarget(event.target));
+    });
+    document.addEventListener("focusout", (event) => {
+      stopReactingToPageElement(event.relatedTarget);
+    });
+
 
     /* ----------------------------------------------------
        THEME CONTROLLER & TRANSITION
@@ -662,12 +817,9 @@
     const htmlEl = document.documentElement;
     const themeText = document.getElementById("mode-text");
     const transitionOverlay = document.getElementById("transition-overlay");
-    const themeByteCopy = document.getElementById("theme-byte-copy");
-    const themeTorchFlame = transitionOverlay.querySelector(".theme-torch-flame");
+    const themeTorchFlame = mascot.querySelector(".theme-torch-flame");
     let isThemeTransitioning = false;
-
-    // Reuse the real mascot so the transition version of Byte always stays in sync.
-    themeByteCopy.append(mascotRobot.cloneNode(true));
+    let mascotThemeStart = null;
 
     const wait = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
 
@@ -677,6 +829,57 @@
       themeText.textContent = isDark ? "LIGHT MODE" : "DARK MODE";
       themeToggleBtn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
       themeToggleBtn.setAttribute("aria-pressed", String(isDark));
+    }
+
+    function sendMascotToThemeStage() {
+      const wasHidden = mascot.hidden;
+      mascot.hidden = false;
+      const startRect = mascot.getBoundingClientRect();
+
+      mascotThemeStart = {
+        hidden: wasHidden,
+        left: startRect.left,
+        top: startRect.top,
+        facingLeft: mascot.classList.contains("is-facing-left"),
+      };
+
+      clearTimeout(mascotMoveTimer);
+      clearTimeout(mascotWalkTimer);
+      clearTimeout(mascotTalkTimer);
+      cancelAnimationFrame(mascotCollisionFrame);
+      heroName?.classList.remove("is-mascot-triggered");
+
+      mascot.style.bottom = "auto";
+      mascot.style.left = `${startRect.left}px`;
+      mascot.style.top = `${startRect.top}px`;
+      mascot.classList.remove("is-facing-left", "is-near-left", "is-near-right", "is-near-top");
+      mascot.classList.add("is-theme-guide");
+
+      // Force the starting coordinates to render before Byte walks to center stage.
+      void mascot.offsetWidth;
+      const stageLeft = Math.max(24, window.innerWidth / 2 - mascot.offsetWidth / 2 - 12);
+      const stageTop = Math.max(32, window.innerHeight / 2 - mascot.offsetHeight / 2);
+      mascot.classList.add("is-walking");
+      mascot.style.left = `${stageLeft}px`;
+      mascot.style.top = `${stageTop}px`;
+      showMascotMessage("Lights out! Stay close—I've got this.", 1900, true);
+    }
+
+    async function returnMascotFromThemeStage() {
+      if (!mascotThemeStart) return;
+
+      mascot.classList.remove("has-theme-torch", "is-talking", "is-excited");
+      mascot.classList.add("is-walking");
+      mascot.classList.toggle("is-facing-left", mascotThemeStart.left < mascot.getBoundingClientRect().left);
+      mascot.style.left = `${mascotThemeStart.left}px`;
+      mascot.style.top = `${mascotThemeStart.top}px`;
+      await wait(620);
+
+      mascot.classList.remove("is-theme-guide", "is-walking");
+      mascot.classList.toggle("is-facing-left", mascotThemeStart.facingLeft);
+      mascot.hidden = mascotThemeStart.hidden;
+      mascotThemeStart = null;
+      updateMascotNameCollision();
     }
 
     // Check states
@@ -697,17 +900,20 @@
       }
 
       isThemeTransitioning = true;
+      mascotThemeSequenceActive = true;
       themeToggleBtn.disabled = true;
+      clearTimeout(mascotMoveTimer);
 
       if (enteringDarkMode) {
-        // Black out first, change the theme underneath, then let Byte reveal it.
+        // The real wandering Byte walks into the blackout and lights the page.
         transitionOverlay.classList.add("is-active");
         await wait(260);
         applyTheme(true);
-
-        transitionOverlay.classList.add("byte-entered");
+        sendMascotToThemeStage();
         await wait(600);
-        transitionOverlay.classList.add("torch-lit");
+        mascot.classList.remove("is-walking");
+        mascot.classList.add("has-theme-torch");
+        showMascotMessage("Night mode online. Let there be light!", 1900, true);
         await wait(300);
 
         const flameRect = themeTorchFlame.getBoundingClientRect();
@@ -717,6 +923,7 @@
         await wait(1450);
         transitionOverlay.classList.remove("is-active");
         await wait(230);
+        await returnMascotFromThemeStage();
       } else {
         // Leaving dark mode stays intentionally quick and unobtrusive.
         transitionOverlay.classList.add("is-active");
@@ -728,11 +935,13 @@
       }
 
       // Reset the hidden stage only after it has faded out, preventing a black flash.
-      transitionOverlay.classList.remove("byte-entered", "torch-lit", "is-revealing");
+      transitionOverlay.classList.remove("is-revealing");
       transitionOverlay.style.removeProperty("--torch-x");
       transitionOverlay.style.removeProperty("--torch-y");
       themeToggleBtn.disabled = false;
       isThemeTransitioning = false;
+      mascotThemeSequenceActive = false;
+      if (!mascot.hidden) mascotMoveTimer = setTimeout(moveMascot, 2600);
     });
 
 
