@@ -662,35 +662,77 @@
     const htmlEl = document.documentElement;
     const themeText = document.getElementById("mode-text");
     const transitionOverlay = document.getElementById("transition-overlay");
+    const themeByteCopy = document.getElementById("theme-byte-copy");
+    const themeTorchFlame = transitionOverlay.querySelector(".theme-torch-flame");
+    let isThemeTransitioning = false;
+
+    // Reuse the real mascot so the transition version of Byte always stays in sync.
+    themeByteCopy.append(mascotRobot.cloneNode(true));
+
+    const wait = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
+
+    function applyTheme(isDark) {
+      htmlEl.classList.toggle('dark', isDark);
+      localStorage.theme = isDark ? 'dark' : 'light';
+      themeText.textContent = isDark ? "LIGHT MODE" : "DARK MODE";
+      themeToggleBtn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+      themeToggleBtn.setAttribute("aria-pressed", String(isDark));
+    }
 
     // Check states
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      htmlEl.classList.add('dark');
-      themeText.textContent = "LIGHT MODE";
+      applyTheme(true);
     } else {
-      htmlEl.classList.remove('dark');
-      themeText.textContent = "DARK MODE";
+      applyTheme(false);
     }
 
-    themeToggleBtn.addEventListener("click", () => {
-      // Trigger a clean fade transition
-      transitionOverlay.classList.add("fading");
-      
-      setTimeout(() => {
-        if (htmlEl.classList.contains('dark')) {
-          htmlEl.classList.remove('dark');
-          localStorage.theme = 'light';
-          themeText.textContent = "DARK MODE";
-        } else {
-          htmlEl.classList.add('dark');
-          localStorage.theme = 'dark';
-          themeText.textContent = "LIGHT MODE";
-        }
-      }, 150);
+    themeToggleBtn.addEventListener("click", async () => {
+      if (isThemeTransitioning) return;
 
-      setTimeout(() => {
-        transitionOverlay.classList.remove("fading");
-      }, 300);
+      const enteringDarkMode = !htmlEl.classList.contains('dark');
+
+      if (reducedMotion.matches) {
+        applyTheme(enteringDarkMode);
+        return;
+      }
+
+      isThemeTransitioning = true;
+      themeToggleBtn.disabled = true;
+
+      if (enteringDarkMode) {
+        // Black out first, change the theme underneath, then let Byte reveal it.
+        transitionOverlay.classList.add("is-active");
+        await wait(260);
+        applyTheme(true);
+
+        transitionOverlay.classList.add("byte-entered");
+        await wait(600);
+        transitionOverlay.classList.add("torch-lit");
+        await wait(300);
+
+        const flameRect = themeTorchFlame.getBoundingClientRect();
+        transitionOverlay.style.setProperty("--torch-x", `${flameRect.left + flameRect.width / 2}px`);
+        transitionOverlay.style.setProperty("--torch-y", `${flameRect.top + flameRect.height / 2}px`);
+        transitionOverlay.classList.add("is-revealing");
+        await wait(1450);
+        transitionOverlay.classList.remove("is-active");
+        await wait(230);
+      } else {
+        // Leaving dark mode stays intentionally quick and unobtrusive.
+        transitionOverlay.classList.add("is-active");
+        await wait(220);
+        applyTheme(false);
+        await wait(180);
+        transitionOverlay.classList.remove("is-active");
+        await wait(230);
+      }
+
+      // Reset the hidden stage only after it has faded out, preventing a black flash.
+      transitionOverlay.classList.remove("byte-entered", "torch-lit", "is-revealing");
+      transitionOverlay.style.removeProperty("--torch-x");
+      transitionOverlay.style.removeProperty("--torch-y");
+      themeToggleBtn.disabled = false;
+      isThemeTransitioning = false;
     });
 
 

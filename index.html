@@ -20,8 +20,19 @@
   <!-- Technical Alignment Grid -->
   <div class="fixed inset-0 bg-grid z-0"></div>
 
-  <!-- Minimal Theme Transition Fade Overlay -->
-  <div id="transition-overlay" class="fixed inset-0 z-50 overflow-hidden"></div>
+  <!-- Cinematic dark-mode transition: Byte lights the page with a torch -->
+  <div id="transition-overlay" aria-hidden="true">
+    <span class="theme-reveal-hole"></span>
+    <div id="theme-byte-scene">
+      <span id="theme-byte-copy" aria-hidden="true"></span>
+      <span class="theme-torch" aria-hidden="true">
+        <i class="theme-torch-flame"></i>
+        <i class="theme-torch-head"></i>
+        <i class="theme-torch-handle"></i>
+      </span>
+      <span class="theme-byte-caption">INITIALIZING NIGHT MODE</span>
+    </div>
+  </div>
 
   <!-- Wandering Portfolio Mascot -->
   <button id="mascot" type="button" aria-label="Talk to Byte, the portfolio mascot">
